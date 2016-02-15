@@ -1,0 +1,24 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.+'
+  }
+}
+
+apply plugin: "kotlin"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.+'
+}
+
+dependencies {
+    compile 'io.reactivex:rxjava:1.0.+'
+    compile 'io.reactivex:rxkotlin:0.40.+'
+	compile 'io.reactivex:rxjavafx:0.0.+'
+}

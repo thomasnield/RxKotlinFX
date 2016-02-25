@@ -3,7 +3,7 @@ Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) libra
 
 Right now it only contains eight extension functions calling on [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) factories. Kotlin, being an effective language, makes this library a little awkward to release because it has so few lines of code. Arguably anybody can implement these extension functions on an as-needed basis.
 
-If anyone has worthwhile ideas to better integrate RxJava, JavaFX, and Kotlin beyond just extension functions, feel free to contribute and maybe a release will be worthwhile. 
+If anyone has worthwhile ideas to better integrate RxJava, JavaFX, and Kotlin beyond just extension functions, feel free to contribute and maybe a release will be worthwhile. Perhaps creating extension functions that emit Observables for Nodes like `TableView` would be valuable, especially if `ObservableValue` properties do not exist for them. 
 
 ```
 fun <T> Observable<T>.toBinding() = JavaFxSubscriber.toBinding(this)

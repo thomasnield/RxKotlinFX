@@ -5,7 +5,7 @@ Right now it only contains eight extension functions calling on [RxJavaFX](https
 
 If anyone has worthwhile ideas to better integrate RxJava, JavaFX, and Kotlin beyond just these extension functions, feel free to contribute and maybe a release will be worthwhile. Perhaps creating extension functions that emit Observables for Nodes like `TableView` would be valuable, especially if `ObservableValue` properties do not already exist. 
 
-```
+```kotlin
 fun <T> Observable<T>.toBinding() = JavaFxSubscriber.toBinding(this)
 fun <T> Observable<T>.toBinding(errorHandler: (Throwable) -> Unit) = JavaFxSubscriber.toBinding(this,errorHandler)
 fun <T> ObservableValue<T>.toObservable() = JavaFxObservable.fromObservableValue(this)

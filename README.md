@@ -1,9 +1,9 @@
 # RxKotlinFX
 Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) library.
 
-Right now it only contains eight extension functions calling on [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) factories. Kotlin, being an effective language, makes this library a little awkward to release because it has so few lines of code. Arguably anybody can implement these extension functions on an as-needed basis.
+This project is in early stages and inspired by the JavaFX/Kotlin interop project [TornadoFX](https://github.com/edvin/tornadofx). Where TornadoFX handles layouts, node extensions, DI, and other JavaFX/Kotlin interoperations, this library will seek to integrate RxJava with JavaFX in the same spirit using Kotlin. The vision is to add useful extensions that put `Observable` streams as properties and functions on JavaFX components, especially where `ObservableValue` properties are not readily available. 
 
-If anyone has worthwhile ideas to better integrate RxJava, JavaFX, and Kotlin beyond just these extension functions, feel free to contribute and maybe a release will be worthwhile. Perhaps creating extension functions that emit Observables for Nodes like `TableView` would be valuable, especially if `ObservableValue` properties do not already exist. 
+The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static factories as extension functions. 
 
 ```kotlin
 fun <T> Observable<T>.toBinding() = JavaFxSubscriber.toBinding(this)
@@ -13,4 +13,15 @@ fun <T> ObservableValue<T>.toObservableChanges() = JavaFxObservable.fromObservab
 fun <T> Observable<T>.toFxScheduler() = observeOn(JavaFxScheduler.getInstance())
 fun <T : Event> Node.toNodeEvents(eventType: EventType<T>) = JavaFxObservable.fromNodeEvents(this, eventType)
 fun <T> Observable<T>.observeOnFx() = this.observeOn(JavaFxScheduler.getInstance())
+```
+
+The rest of the project will likely add convenient extension functions to emit events as `Observable` values. 
+
+```kotlin 
+//TableView Extensions
+fun <S> TableView<S>.mouseEvents(mouseEventType: EventType<MouseEvent>) =
+        JavaFxObservable.fromNodeEvents(this,mouseEventType)
+
+fun <S> TableView<S>.mouseClicks() =
+        JavaFxObservable.fromNodeEvents(this,MouseEvent.MOUSE_CLICKED)
 ```

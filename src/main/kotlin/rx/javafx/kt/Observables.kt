@@ -16,3 +16,5 @@ fun <T> ObservableValue<T>.toObservable() = JavaFxObservable.fromObservableValue
 fun <T> ObservableValue<T>.toObservableChanges() = JavaFxObservable.fromObservableValueChanges(this)
 fun <T> Observable<T>.toFxScheduler() = observeOn(JavaFxScheduler.getInstance())
 fun <T : Event> Node.toNodeEvents(eventType: EventType<T>) = JavaFxObservable.fromNodeEvents(this, eventType)
+
+

@@ -1,13 +1,12 @@
 package rx.javafx.kt
 
 import javafx.event.EventType
-import javafx.scene.control.TableView
+import javafx.scene.Node
 import javafx.scene.input.MouseEvent
 import rx.observables.JavaFxObservable
 
-//TableView Extensions
-fun <S> TableView<S>.mouseEvents(mouseEventType: EventType<MouseEvent>) =
+fun <N: Node> N.mouseEvents(mouseEventType: EventType<MouseEvent>) =
         JavaFxObservable.fromNodeEvents(this,mouseEventType)
 
-fun <S> TableView<S>.mouseClicks() =
+fun <N: Node> N.mouseClicks() =
         JavaFxObservable.fromNodeEvents(this,MouseEvent.MOUSE_CLICKED)

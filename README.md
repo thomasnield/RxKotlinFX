@@ -18,8 +18,8 @@ fun <T> Observable<T>.observeOnFx() = this.observeOn(JavaFxScheduler.getInstance
 The rest of the project will likely add convenient extension functions to emit events as `Observable` values. 
 
 ```kotlin 
-fun <N: Node> N.mouseEvents(mouseEventType: EventType<MouseEvent>) =
-        JavaFxObservable.fromNodeEvents(this,mouseEventType)
+val <T> TableView<T>.itemSelections: Observable<T>
+    get() = this.selectionModel.selectedItemProperty().toObservable()
 
 fun <N: Node> N.mouseClicks() =
         JavaFxObservable.fromNodeEvents(this,MouseEvent.MOUSE_CLICKED)

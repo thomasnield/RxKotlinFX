@@ -15,4 +15,49 @@ val items = FXCollections.obs
 ```
 #####Observable of ObservableList Adds
 ```kotlin
-The rest of the project will likely add convenient extension functions to emit events as `Observable` values. After I finish some developments in [RxJavaFX](https://github.com/ReactiveX/RxJavaFX), I will be extending to this library next. 
+val items = FXCollections.observableArrayList("Alpha", "Beta", "Gamma")
+
+val changes = items.changes() //returns ObservableList<ListChange<T>>
+
+changes.filter { it.flag == Flag.ADDED }
+        .map { it.value }
+        .subscribe { println("ADDED $it") }
+
+items.add("Delta")
+items.add("Epsilon")
+
+/*will print:
+ADDED Delta
+ADDED Epsilon
+*/
+
+```
+The rest of the project will likely add convenient extension functions to emit events as `Observable` values. For example, helpful `Observable` extension functions can be added to `TableView` and `ListView`.
+
+```kotlin
+
+/**
+ * Returns an Observable emitting integer values for selected row indexes.
+ */
+val <T> TableView<T>.rowIndexSelections: Observable<Int>
+    get() = itemSelections.map { selectionModel.selectedIndex }
+
+/**
+ * Returns an Observable emitting integer values for selected column indexes.
+ */
+val <T> TableView<T>.columnIndexSelections: Observable<Int>
+    get() = selectionModel.selectedCells.toObservable().flatMap { Observable.from(it).map { it.column } }
+
+/**
+ * Returns an Observable emitting selected items for the given TableView
+ */
+val <T> TableView<T>.itemSelections: Observable<T>
+    get() = selectionModel.selectedItemProperty().toObservable()
+
+/**
+ * Returns an Observable emitting selected items for the given ListView
+ */
+val <T> ListView<T>.itemSelections: Observable<T>
+    get() = selectionModel.selectedItems.toObservable().flatMap { Observable.from(it) }
+```
+

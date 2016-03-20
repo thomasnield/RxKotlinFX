@@ -16,7 +16,7 @@ val subscription = buttonEvents.subscribe { println("Pressed!") }
 ```kotlin
 val items = FXCollections.observableArrayList("Alpha", "Beta", "Gamma")
 
-val changes = items.changes() //returns ObservableList<ListChange<T>>
+val changes = items.changes() //returns Observable<ListChange<T>>
 
 changes.filter { it.flag == Flag.ADDED }
         .map { it.value }

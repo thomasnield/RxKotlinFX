@@ -33,7 +33,7 @@ ADDED Epsilon
 ```
 
 ##Further Extensions
-The rest of the project will likely add convenient extension functions to emit events as `Observable` values, much like the [TornadoFX](https://github.com/edvin/tornadofx) project has done. For example, helpful `Observable` extension functions can be added to `TableView` and `ListView`.
+The rest of the project will likely add convenient extension functions to emit events as `Observable` values, much like the [TornadoFX](https://github.com/edvin/tornadofx) project has done. For example, helpful `Observable` extension functions and properties can be added to `TableView` and `ListView`, such as selection events.
 
 ```kotlin
 

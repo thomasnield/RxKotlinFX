@@ -20,4 +20,3 @@ val <T> TableView<T>.itemSelections: Observable<T>
 val <T> ListView<T>.itemSelections: Observable<T>
     get() = selectionModel.selectedItems.toObservable().flatMap { Observable.from(it) }
 
-

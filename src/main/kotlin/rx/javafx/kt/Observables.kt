@@ -15,28 +15,119 @@ import rx.observables.JavaFxObservable
 import rx.schedulers.JavaFxScheduler
 import rx.subscribers.JavaFxSubscriber
 
+/**
+ * Observes the emissions on the JavaFX Thread.
+ * This is the same as calling Observable#observeOn(JavaFxScheduler.getInstance())
+ */
 fun <T> Observable<T>.observeOnFx() = observeOn(JavaFxScheduler.getInstance())
+/**
+ * Instructs the source Observable to emit items on the JavaFX Thread.
+ * This is the same as calling Observable#subscribeOn(JavaFxScheduler.getInstance())
+ */
 fun <T> Observable<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.getInstance())
 
+/**
+ * Turns an Observable into a JavaFX Binding. Calling the Binding's dispose() method will handle the unsubscription.
+ */
 fun <T> Observable<T>.toBinding() = JavaFxSubscriber.toBinding(this)
+/**
+ * Turns an Observable into a JavaFX Binding. Calling the Binding's dispose() method will handle the unsubscription.
+ */
 fun <T> Observable<T>.toBinding(errorHandler: (Throwable) -> Unit) = JavaFxSubscriber.toBinding(this,errorHandler)
+/**
+ * Create an rx Observable from a javafx ObservableValue
+ * @param <T>          the type of the observed value
+ * @return an Observable emitting values as the wrapped ObservableValue changes
+ */
 fun <T> ObservableValue<T>.toObservable() = JavaFxObservable.fromObservableValue(this)
+/**
+ * Create an rx Observable from a javafx ObservableValue, and emits changes with old and new value pairs
+ * @param <T>          the type of the observed value
+ * @return an Observable emitting values as the wrapped ObservableValue changes
+ */
 fun <T> ObservableValue<T>.toObservableChanges() = JavaFxObservable.fromObservableValueChanges(this)
 
+/**
+ * Creates an observable corresponding to javafx ContextMenu action events.
+ * @return An Observable of UI ActionEvents
+ */
 fun ContextMenu.actionEvents() = JavaFxObservable.fromActionEvents(this)
+
+/**
+ * Creates an observable corresponding to javafx MenuItem action events.
+ *
+ * @param menuItem      The target of the ActionEvents
+ * @return An Observable of UI ActionEvents
+ */
 fun MenuItem.actionEvents() = JavaFxObservable.fromActionEvents(this)
+
+/**
+ * Creates an observable corresponding to javafx Node action events.
+ * @return An Observable of UI ActionEvents
+ */
 fun Node.actionEvents() = JavaFxObservable.fromActionEvents(this)
 
-fun <T : Event> Node.eventsOf(eventType: EventType<T>) = JavaFxObservable.fromNodeEvents(this, eventType)
-fun <T: Event> Scene.eventsOf(eventType: EventType<T>) = JavaFxObservable.fromSceneEvents(this,eventType)
-fun <T: WindowEvent> Window.eventsOf(eventType: EventType<T>) = JavaFxObservable.fromWindowEvents(this,eventType)
+/**
+ * Creates an observable corresponding to javafx Node events.
+ * @param eventType The type of the observed UI events
+ * @return An Observable of UI events, appropriately typed
+ */
+fun <T : Event> Node.events(eventType: EventType<T>) = JavaFxObservable.fromNodeEvents(this, eventType)
+/**
+ * Create an rx Observable from a javafx ObservableValue
+ * @param <T>          the type of the observed value
+ * @return an Observable emitting values as the wrapped ObservableValue changes
+ */
+fun <T: Event> Scene.events(eventType: EventType<T>) = JavaFxObservable.fromSceneEvents(this,eventType)
+/**
+ * Create an rx Observable from a javafx ObservableValue, and emits changes with old and new value pairs
+ * @param <T>          the type of the observed value
+ * @return an Observable emitting values as the wrapped ObservableValue changes
+ */
+fun <T: WindowEvent> Window.events(eventType: EventType<T>) = JavaFxObservable.fromWindowEvents(this,eventType)
 
+/**
+ * Creates an observable that emits an ObservableList every time it is modified
+ * @return An Observable emitting the ObservableList each time it changes
+ */
 fun <T> ObservableList<T>.toObservable() = JavaFxObservable.fromObservableList(this)
 
+/**
+ * Creates an observable that emits all removal items from an ObservableList
+ * @return An Observable emitting items removed from the ObservableList
+ */
 fun <T> ObservableList<T>.removals() = JavaFxObservable.fromObservableListRemovals(this)
+/**
+ * Creates an observable that emits all additions to an ObservableList
+ * @return An Observable emitting items added to the ObservableList
+ */
 fun <T> ObservableList<T>.additions() = JavaFxObservable.fromObservableListAdds(this)
+/**
+ * Creates an observable that emits all updated items from an ObservableList.
+ * If you declare an ObservableList that listens to one or more properties of each element,
+ * you can emit the changed items every time these properties are modified
+ * <pre>ObservableList<Person> sourceList = FXCollections.observableArrayList(user -> new javafx.beans.Observable[]{user.age} );</pre>
+ * @return An Observable emitting items updated in the ObservableList
+ */
 fun <T> ObservableList<T>.updates() = JavaFxObservable.fromObservableListUpdates(this)
+/**
+ * Emits all added, removed, and updated items from an ObservableList
+ * @return An Observable emitting changed items with an ADDED, REMOVED, or UPDATED flags
+ */
 fun <T> ObservableList<T>.changes() =JavaFxObservable.fromObservableListChanges(this)
+
+/**
+ * Emits distinctly  added and removed items from an ObservableList.
+ * If dupe items with identical hashcode/equals evaluations are added to an ObservableList, only the first one will fire an ADDED item.
+ * When the last dupe is removed, only then will it fire a REMOVED item.
+ * @return An Observable emitting changed items with an ADDED, REMOVED, or UPDATED flags
+ */
 fun <T> ObservableList<T>.distinctChanges() = JavaFxObservable.fromObservableListDistinctChanges(this)
+/**
+ * Emits distinctly added and removed mappings to each R item from an ObservableList.
+ * If dupe mapped R items with identical hashcode/equals evaluations are added to an ObservableList, only the first one will fire an ADDED R item.
+ * When the last dupe is removed, only then will it fire a REMOVED R item.
+ * @return An Observable emitting changed mapped items with an ADDED, REMOVED, or UPDATED flags
+ */
 fun <T,R> ObservableList<T>.distinctchanges(mapper: ((T) -> R)) = JavaFxObservable.fromObservableListDistinctChanges(this,mapper)
 

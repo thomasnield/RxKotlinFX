@@ -11,8 +11,6 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 val myButton = Button("Press Me")
 val buttonEvents = myButton.actionEvents()
 val subscription = buttonEvents.subscribe { println("Pressed!") } 
-
-val items = FXCollections.obs
 ```
 #####Observable of ObservableList Adds
 ```kotlin

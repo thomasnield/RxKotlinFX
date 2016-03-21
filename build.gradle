@@ -42,7 +42,7 @@ signing {
     sign configurations.archives
 }
 
-group = "org.nield.rx"
+group = "com.github.nield"
 archivesBaseName = "RxKotlinFX"
 version = "0.0.1"
 

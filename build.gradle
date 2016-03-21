@@ -42,7 +42,7 @@ signing {
     sign configurations.archives
 }
 
-group = "com.github.nield"
+group = "com.github.thomasnield"
 archivesBaseName = "RxKotlinFX"
 version = "0.0.1"
 

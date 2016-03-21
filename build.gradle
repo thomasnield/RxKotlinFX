@@ -11,6 +11,9 @@ apply plugin: "kotlin"
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 repositories {
   mavenCentral()
 }
@@ -20,8 +23,8 @@ dependencies {
 }
 
 dependencies {
-    compile 'io.reactivex:rxjava:1.0.+'
-	compile 'io.reactivex:rxjavafx:0.0.+'
+    compile 'io.reactivex:rxjava:1.1.2'
+	compile 'io.reactivex:rxjavafx:0.0.5'
 }
 
 task javadocJar(type: Jar) {

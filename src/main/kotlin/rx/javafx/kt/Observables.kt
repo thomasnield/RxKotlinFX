@@ -129,5 +129,5 @@ fun <T> ObservableList<T>.distinctChanges() = JavaFxObservable.fromObservableLis
  * When the last dupe is removed, only then will it fire a REMOVED R item.
  * @return An Observable emitting changed mapped items with an ADDED, REMOVED, or UPDATED flags
  */
-fun <T,R> ObservableList<T>.distinctchanges(mapper: ((T) -> R)) = JavaFxObservable.fromObservableListDistinctChanges(this,mapper)
+fun <T,R> ObservableList<T>.distinctChanges(mapper: ((T) -> R)) = JavaFxObservable.fromObservableListDistinctChanges(this,mapper)
 

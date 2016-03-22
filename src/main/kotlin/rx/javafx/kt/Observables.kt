@@ -39,7 +39,7 @@ fun <T> Observable<T>.toBinding(errorHandler: (Throwable) -> Unit) = JavaFxSubsc
  * @param <T>          the type of the observed value
  * @return an Observable emitting values as the wrapped ObservableValue changes
  */
-fun <T> ObservableValue<T>.toObservable() = JavaFxObservable.fromObservableValue(this)
+fun <T> ObservableValue<T>.onChangeObservable() = JavaFxObservable.fromObservableValue(this)
 /**
  * Create an rx Observable from a javafx ObservableValue, and emits changes with old and new value pairs
  * @param <T>          the type of the observed value
@@ -90,7 +90,7 @@ fun <T: WindowEvent> Window.events(eventType: EventType<T>) = JavaFxObservable.f
  * Creates an observable that emits an ObservableList every time it is modified
  * @return An Observable emitting the ObservableList each time it changes
  */
-fun <T> ObservableList<T>.toObservable() = JavaFxObservable.fromObservableList(this)
+fun <T> ObservableList<T>.onChangedObservable() = JavaFxObservable.fromObservableList(this)
 
 /**
  * Creates an observable that emits all removal items from an ObservableList

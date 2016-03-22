@@ -46,8 +46,8 @@ signing {
 }
 
 group = "com.github.thomasnield"
-archivesBaseName = "RxKotlinFX"
-version = "0.0.1"
+archivesBaseName = "rxkotlinfx"
+version = "0.0.2"
 
 uploadArchives {
     repositories {
@@ -63,7 +63,7 @@ uploadArchives {
             }
 
             pom.project {
-                name 'RxKotlinFX'
+                name 'rxkotlinfx'
                 packaging 'jar'
                 // optionally artifactId can be defined here
                 description 'Interoperability library for RxJava, JavaFX, and Kotlin'
@@ -81,7 +81,6 @@ uploadArchives {
                         url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
-
                 developers {
                     developer {
                         id 'thomasnield'

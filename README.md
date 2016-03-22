@@ -1,9 +1,36 @@
 # RxKotlinFX
 Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) library.
 
+## Binaries
+
+Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cio.reactivex.rxjavafx).
+
+Example for Maven:
+
+```xml
+<dependency>
+    <groupId>com.github.thomasnield</groupId>
+    <artifactId>RxKotlinFX</artifactId>
+    <version>x.y.z</version>
+</dependency>
+```
+
+Gradle: 
+
+```groovy 
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compile 'com.github.thomasnield:RxKotlinFX:x.y.z'
+}
+```
+
+##Features
+
 RxKotlinFX contains Kotlin extensions to [RxJavaFX](https://github.com/ReactiveX/RxJavaFX). It also is in exporatory stages to add helpful `Node` extension functions that return Observables. This exploration is inspired by the JavaFX/Kotlin interop project [TornadoFX](https://github.com/edvin/tornadofx). Where TornadoFX handles layouts, node extensions, DI, and other JavaFX/Kotlin interoperations, this library will seek to integrate RxJava with JavaFX in the same spirit using Kotlin. The vision is to add useful extensions that put `Observable` streams as properties and functions on JavaFX components, especially where `ObservableValue` properties are not readily available. 
 
-##RxJavaFX Extensions
+###RxJavaFX Extensions
 The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static factories as extension functions. See the full list of extension functions [here](https://github.com/thomasnield/RxKotlinFX/blob/master/src/main/kotlin/rx/javafx/kt/Observables.kt). 
 
 #####Observable of Button ActionEvents
@@ -32,7 +59,7 @@ ADDED Epsilon
 
 ```
 
-##Further Extensions
+###Further Extensions
 The rest of the project will likely add convenient extension functions to emit events as `Observable` values, [much like the TornadoFX project has done](https://github.com/edvin/tornadofx/blob/master/src/main/java/tornadofx/Nodes.kt). For example, helpful `Observable` extension functions and properties can be added to `TableView` and `ListView`, such as selection events.
 
 ```kotlin

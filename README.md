@@ -10,7 +10,7 @@ Example for Maven:
 ```xml
 <dependency>
     <groupId>com.github.thomasnield</groupId>
-    <artifactId>RxKotlinFX</artifactId>
+    <artifactId>rxkotlinfx</artifactId>
     <version>x.y.z</version>
 </dependency>
 ```
@@ -22,7 +22,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    compile 'com.github.thomasnield:RxKotlinFX:x.y.z'
+    compile 'com.github.thomasnield:rxkotlinfx:x.y.z'
 }
 ```
 

@@ -25,6 +25,7 @@ dependencies {
 dependencies {
     compile 'io.reactivex:rxjava:1.1.2'
 	compile 'io.reactivex:rxjavafx:0.0.5'
+    testCompile 'junit:junit:4.12'
 }
 
 task javadocJar(type: Jar) {

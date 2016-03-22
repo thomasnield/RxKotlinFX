@@ -12,19 +12,7 @@ import javafx.stage.Window
 import javafx.stage.WindowEvent
 import rx.Observable
 import rx.observables.JavaFxObservable
-import rx.schedulers.JavaFxScheduler
 import rx.subscribers.JavaFxSubscriber
-
-/**
- * Observes the emissions on the JavaFX Thread.
- * This is the same as calling Observable#observeOn(JavaFxScheduler.getInstance())
- */
-fun <T> Observable<T>.observeOnFx() = observeOn(JavaFxScheduler.getInstance())
-/**
- * Instructs the source Observable to emit items on the JavaFX Thread.
- * This is the same as calling Observable#subscribeOn(JavaFxScheduler.getInstance())
- */
-fun <T> Observable<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.getInstance())
 
 /**
  * Turns an Observable into a JavaFX Binding. Calling the Binding's dispose() method will handle the unsubscription.
@@ -90,7 +78,7 @@ fun <T: WindowEvent> Window.events(eventType: EventType<T>) = JavaFxObservable.f
  * Creates an observable that emits an ObservableList every time it is modified
  * @return An Observable emitting the ObservableList each time it changes
  */
-fun <T> ObservableList<T>.onChangeObservable() = JavaFxObservable.fromObservableList(this)
+fun <T> ObservableList<T>.onChangedObservable() = JavaFxObservable.fromObservableList(this)
 
 /**
  * Creates an observable that emits all removal items from an ObservableList

@@ -25,6 +25,8 @@ dependencies {
     compile 'com.github.thomasnield:rxkotlinfx:x.y.z'
 }
 ```
+##Contributing
+Feel free to contribute and help create the ultimate desktop UI stack out of Kotlin, RxJava, and JavaFX. Speaking of stacks, this project may be used in conjunction with [TornadoFX](https://github.com/edvin/tornadofx) and [RxKotlin](https://github.com/ReactiveX/RxKotlin). Please make sure no extension naming conventions conflict with these two other libraries :)
 
 ##Features
 

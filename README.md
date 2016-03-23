@@ -60,6 +60,26 @@ ADDED Epsilon
 
 ```
 
+###Operators
+RxKotlinFX has a growing list of operators extended onto `Observable`.
+
+There are shorthand scheduler extension functions for the JavaFX thread.
+```kotlin
+observeOnFx() //same as observeOn(JavaFxScheduler.getinstance())
+subscribeOnFx() //same as subscribeon(JavaFxScheduler.getinstance())
+```
+
+There are also `doOnXXXFx()` operators to create side effects on the FX thread. These are just like the standard RxJava operators such as `doOnNext()`, `doOnError()`, etc, but the actions are executed on the FX thread. 
+
+```kotlin
+doOnNextFx() 
+doOnErrorFx()
+doOnCompletedFx()
+doOnSubscribeFx()
+doOnTerminateFx()
+doOnUnsubscribeFx()
+```
+
 ###Further Extensions
 The rest of the project will likely add convenient extension functions to emit events as `Observable` values, [much like the TornadoFX project has done](https://github.com/edvin/tornadofx/blob/master/src/main/java/tornadofx/Nodes.kt). For example, helpful `Observable` extension functions and properties can be added to `TableView` and `ListView`, such as selection events.
 

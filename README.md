@@ -79,7 +79,7 @@ doOnTerminateFx()
 doOnUnsubscribeFx()
 ```
 
-###Further Extensions
+###Control Extensions
 The rest of the project will likely add convenient extension functions to emit events as `Observable` values, [much like the TornadoFX project has done](https://github.com/edvin/tornadofx/blob/master/src/main/java/tornadofx/Nodes.kt). For example, helpful `Observable` extension functions and properties can be added to `TableView` and `ListView`, such as selection events.
 
 ```kotlin

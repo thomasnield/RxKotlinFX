@@ -10,7 +10,7 @@ Example for Maven:
 ```xml
 <dependency>
     <groupId>com.github.thomasnield</groupId>
-    <artifactId>RxKotlinFX</artifactId>
+    <artifactId>rxkotlinfx</artifactId>
     <version>x.y.z</version>
 </dependency>
 ```
@@ -22,9 +22,11 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    compile 'com.github.thomasnield:RxKotlinFX:x.y.z'
+    compile 'com.github.thomasnield:rxkotlinfx:x.y.z'
 }
 ```
+##Contributing
+Feel free to contribute and help streamline a pragmatic UI stack with Kotlin, RxJava, and JavaFX. Speaking of stacks, this project may be used in conjunction with [TornadoFX](https://github.com/edvin/tornadofx) and [RxKotlin](https://github.com/ReactiveX/RxKotlin). Please make sure no extension naming conventions conflict with these two other libraries :)
 
 ##Features
 
@@ -59,33 +61,27 @@ ADDED Epsilon
 
 ```
 
-###Further Extensions
-The rest of the project will likely add convenient extension functions to emit events as `Observable` values, [much like the TornadoFX project has done](https://github.com/edvin/tornadofx/blob/master/src/main/java/tornadofx/Nodes.kt). For example, helpful `Observable` extension functions and properties can be added to `TableView` and `ListView`, such as selection events.
+###Operators
+RxKotlinFX has a growing list of operators placed as extension functions onto `Observable` that aid interoperability with JavaFX. For instance, there are shorthand scheduler extension functions for the JavaFX thread like below:
 
 ```kotlin
-
-/**
- * Returns an Observable emitting integer values for selected row indexes.
- */
-val <T> TableView<T>.rowIndexSelections: Observable<Int>
-    get() = itemSelections.map { selectionModel.selectedIndex }
-
-/**
- * Returns an Observable emitting integer values for selected column indexes.
- */
-val <T> TableView<T>.columnIndexSelections: Observable<Int>
-    get() = selectionModel.selectedCells.toObservable().flatMap { Observable.from(it).map { it.column } }
-
-/**
- * Returns an Observable emitting selected items for the given TableView
- */
-val <T> TableView<T>.itemSelections: Observable<T>
-    get() = selectionModel.selectedItemProperty().toObservable()
-
-/**
- * Returns an Observable emitting selected items for the given ListView
- */
-val <T> ListView<T>.itemSelections: Observable<T>
-    get() = selectionModel.selectedItems.toObservable().flatMap { Observable.from(it) }
+observeOnFx() //same as observeOn(JavaFxScheduler.getinstance())
+subscribeOnFx() //same as subscribeOn(JavaFxScheduler.getinstance())
 ```
+
+There are also `doOnXXXFx()` operators to create side effects on the FX thread. These are just like the standard RxJava operators such as `doOnNext()`, `doOnError()`, etc, but the actions are executed on the FX thread: 
+
+```kotlin
+doOnNextFx() 
+doOnErrorFx()
+doOnCompletedFx()
+doOnSubscribeFx()
+doOnTerminateFx()
+doOnUnsubscribeFx()
+```
+
+###Control Extensions
+The rest of the project will likely add convenient extension functions to emit events as `Observable` values, [much like the TornadoFX project has done](https://github.com/edvin/tornadofx/blob/master/src/main/java/tornadofx/Nodes.kt). For example, helpful `Observable` extension functions and properties can be added to `TableView` and `ListView`, such as selection events.
+
+Check releases as well the [Nodes code file](https://github.com/thomasnield/RxKotlinFX/blob/master/src/main/kotlin/rx/javafx/kt/Nodes.kt) to see a list of available extensions. Feel free to contribute if you see any missing.
 

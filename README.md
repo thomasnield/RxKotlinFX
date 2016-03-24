@@ -93,7 +93,7 @@ RxKotlinFX has a growing list of operators placed as extension functions onto `O
 |doOnErrorCountFx()|Same as `doOnErrorCount()` except action is executed on FX thread
 |doOnCompletedCountFx()|Same as `doOnCompletedCount()` except action is executed on FX thread
 
-The `doXXXCount()` operators are especially helpful for providing a status update of how many items have been "processed" by an `Observable`. 
+The `doOnXXXCount()` operators are especially helpful for providing a status update of how many items have been "processed" by an `Observable`. 
 
 ```kotlin
 val source = Observable.range(1,1000)

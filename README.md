@@ -58,7 +58,7 @@ myLabel.textProperty().bind(countBinding)
 ```kotlin
 val items = FXCollections.observableArrayList("Alpha", "Beta", "Gamma")
 
-val changes = items.changes() //returns Observable<ListChange<T>>
+val changes = items.changes()
 
 changes.filter { it.flag == Flag.ADDED }
         .map { it.value }
@@ -67,7 +67,7 @@ changes.filter { it.flag == Flag.ADDED }
 items.add("Delta")
 items.add("Epsilon")
 ```
-**OUTPUT**
+OUTPUT:
 ```
 Delta
 Epsilon

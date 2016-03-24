@@ -87,7 +87,7 @@ The rest of the project will likely add convenient extension functions to emit e
 ```kotlin
 val tableView: TableView<MyItem> = ...
 val selections: Observable<MyItem> = tableView.itemSelections
-val rowIndexSelections: Observable<Int<> = tableView.rowIndexSelections
+val rowIndexSelections: Observable<Int> = tableView.rowIndexSelections
 ```
 
 Check releases as well the [Nodes code file](https://github.com/thomasnield/RxKotlinFX/blob/master/src/main/kotlin/rx/javafx/kt/Nodes.kt) to see a list of available extensions. Feel free to contribute if you see any missing.

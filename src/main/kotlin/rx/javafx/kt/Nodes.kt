@@ -1,8 +1,6 @@
 package rx.javafx.kt
 
-import javafx.scene.control.ComboBox
-import javafx.scene.control.ListView
-import javafx.scene.control.TableView
+import javafx.scene.control.*
 import rx.Observable
 
 /**
@@ -36,3 +34,14 @@ val <T> ListView<T>.itemSelections: Observable<T>
 val <T> ComboBox<T>.valueSelections: Observable<T>
     get() = valueProperty().toObservable()
 
+/**
+ * Returns an [Observable] emitting text value inputs for the given [TextField]
+ */
+val TextField.textValues: Observable<String>
+        get() = textProperty().toObservable()
+
+/**
+ * Returns an [Observable] emitting [Tab] selections for the given [TabPane]
+ */
+val TabPane.tabSelections: Observable<Tab>
+        get() = selectionModel.selectedItemProperty().toObservable()

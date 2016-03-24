@@ -67,7 +67,7 @@ changes.filter { it.flag == Flag.ADDED }
 items.add("Delta")
 items.add("Epsilon")
 ```
-OUTPUT:
+######OUTPUT
 ```
 ADDED Delta
 ADDED Epsilon

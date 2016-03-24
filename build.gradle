@@ -64,7 +64,7 @@ uploadArchives {
             }
 
             pom.project {
-                name 'rxkotlinfx'
+                name 'RxKotlinFX'
                 packaging 'jar'
                 // optionally artifactId can be defined here
                 description 'Interoperability library for RxJava, JavaFX, and Kotlin'

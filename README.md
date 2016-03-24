@@ -40,6 +40,19 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 val myButton = Button("Press Me")
 val subscription = myButton.actionEvents().subscribe { println("Pressed!") } 
 ```
+#####Creating a Reactive Binding
+```kotlin
+val myButton = Button("Press Me")
+
+val countBinding = myButtonActionEvents().map { 1 }
+    .startWith(0)
+    .reduce { x,y -> x + y }
+    .map { it.toString() }
+    .toBinding()
+    
+val myLabel = Label()
+myLabel.textProperty().bind(countBinding)
+```
 
 #####Observable of ObservableList Adds
 ```kotlin

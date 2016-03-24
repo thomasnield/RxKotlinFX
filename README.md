@@ -69,8 +69,8 @@ items.add("Epsilon")
 ```
 OUTPUT:
 ```
-Delta
-Epsilon
+ADDED Delta
+ADDED Epsilon
 ```
 
 ###Operators

@@ -66,12 +66,11 @@ changes.filter { it.flag == Flag.ADDED }
 
 items.add("Delta")
 items.add("Epsilon")
-
-/*will print:
-ADDED Delta
-ADDED Epsilon
-*/
-
+```
+**OUTPUT**
+```
+Delta
+Epsilon
 ```
 
 ###Operators

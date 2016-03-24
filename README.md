@@ -38,9 +38,9 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 #####Observable of Button ActionEvents
 ```kotlin
 val myButton = Button("Press Me")
-val buttonEvents = myButton.actionEvents()
-val subscription = buttonEvents.subscribe { println("Pressed!") } 
+val subscription = myButton.actionEvents().subscribe { println("Pressed!") } 
 ```
+
 #####Observable of ObservableList Adds
 ```kotlin
 val items = FXCollections.observableArrayList("Alpha", "Beta", "Gamma")
@@ -62,26 +62,33 @@ ADDED Epsilon
 ```
 
 ###Operators
-RxKotlinFX has a growing list of operators placed as extension functions onto `Observable` that aid interoperability with JavaFX. For instance, there are shorthand scheduler extension functions for the JavaFX thread like below:
+RxKotlinFX has a growing list of operators placed as extension functions onto `Observable` that aid interoperability with JavaFX.
 
-```kotlin
-observeOnFx() //same as observeOn(JavaFxScheduler.getinstance())
-subscribeOnFx() //same as subscribeOn(JavaFxScheduler.getinstance())
-```
-
-There are also `doOnXXXFx()` operators to create side effects on the FX thread. These are just like the standard RxJava operators such as `doOnNext()`, `doOnError()`, etc, but the actions are executed on the FX thread: 
-
-```kotlin
-doOnNextFx() 
-doOnErrorFx()
-doOnCompletedFx()
-doOnSubscribeFx()
-doOnTerminateFx()
-doOnUnsubscribeFx()
-```
+|Operator|Description|
+|----|-----|
+|observeOnFx()|Schedules the emissions to be observed on the JavaFX thread
+|subscribeOnFx()|Schedules the source `Observable` to emit items on the JavaFX thread
+|doOnNextFx()|Executes the specified action on the FX thread for each emission
+|doOnErrorFx()|Executes the specified action on the FX thread when an error is emitted
+|doOnCompletedFx()|Executes the specified action on the FX thread when the `Observable` calls `onCompleted()`
+|doOnSubscribeFx()|Executes the specified action on the FX thread when the `Observable` is first subscribed
+|doOnTerminateFx()|Executes the specified action on the FX thread when the `Observable` calls `onCompleted()` or `onError()`
+|doOnUnsubscribeFx()|Executes the specified action on the FX thread when the `Observable` is unsubscribed
+|doOnNextCount()|Executes the specified action with the cumulative count of emissions for that emission
+|doOnErrorCount()|Executes the specified action with the cumulative count of emissions when an error is emitted
+|doOnCompletedCount()|Executes the specified action with the total emission count when `onCompleted()` is called
+|doOnNextCountFx()|Same as `doOnNextCount()` except action is executed on FX thread
+|doOnErrorCountFx()|Same as `doOnErrorCount()` except action is executed on FX thread
+|doOnCompletedCountFx()|Same as `doOnCompletedCount()` except action is executed on FX thread
 
 ###Control Extensions
 The rest of the project will likely add convenient extension functions to emit events as `Observable` values, [much like the TornadoFX project has done](https://github.com/edvin/tornadofx/blob/master/src/main/java/tornadofx/Nodes.kt). For example, helpful `Observable` extension functions and properties can be added to `TableView` and `ListView`, such as selection events.
+
+```kotlin
+val tableView: TableView<MyItem> = ...
+val selections: Observable<MyItem> = tableView.itemSelections
+val rowIndexSelections: Observable<Int<> = tableView.rowIndexSelections
+```
 
 Check releases as well the [Nodes code file](https://github.com/thomasnield/RxKotlinFX/blob/master/src/main/kotlin/rx/javafx/kt/Nodes.kt) to see a list of available extensions. Feel free to contribute if you see any missing.
 

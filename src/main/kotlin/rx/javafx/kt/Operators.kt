@@ -1,5 +1,7 @@
 package rx.javafx.kt
 
+import internal.rx.javafx.kt.operators.CountObserver
+import internal.rx.javafx.kt.operators.OperatorEmissionCounter
 import javafx.application.Platform
 import rx.Observable
 import rx.schedulers.JavaFxScheduler
@@ -51,3 +53,33 @@ inline fun <T> Observable<T>.doOnTerminateFx(crossinline onTerminate: () -> Unit
 inline fun <T> Observable<T>.doOnUnsubscribeFx(crossinline onUnsubscribe: () -> Unit) = doOnUnsubscribe {
     Platform.runLater { onUnsubscribe.invoke() }
 }
+/**
+ * Executes side effect with the accumulating count of emissions for each onNext() call
+ */
+fun <T> Observable<T>.doOnNextCount(onNext: (Int) -> Unit) = lift<T>(
+        OperatorEmissionCounter(CountObserver(doOnNextCountAction = onNext))
+)
+/**
+ * Executes side effect with the total count of emissions for the onCompleted() call
+ */
+fun <T> Observable<T>.doOnCompletedCount(onCompleted: (Int) -> Unit) = lift<T>(
+        OperatorEmissionCounter(CountObserver(doOnCompletedCountAction = onCompleted))
+)
+/**
+ * Executes side effect with the total count of emissions for an onError() call
+ */
+fun <T> Observable<T>.doOnErrorCount(onError: (Int) -> Unit) = lift<T>(
+        OperatorEmissionCounter(CountObserver(doOnErrorCountAction = onError))
+)
+/**
+ * Executes side effect on FX thread with the accumulating count of emissions for each onNext() call
+ */
+fun <T> Observable<T>.doOnNextCountFx(onNext: (Int) -> Unit) = doOnNextCount { Platform.runLater { onNext.invoke(it) } }
+/**
+ * Executes side effect on FX thread with the total count of emissions for the onCompleted() call
+ */
+fun <T> Observable<T>.doOnCompletedCountFx(onCompleted: (Int) -> Unit) = doOnCompletedCount { Platform.runLater { onCompleted.invoke(it) } }
+/**
+ * Executes side effect on FX thread with the total count of emissions for the onError() call
+ */
+fun <T> Observable<T>.doOnErrorCountFx(onError: (Int) -> Unit) = doOnErrorCount { Platform.runLater { onError.invoke(it) } }

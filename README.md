@@ -45,8 +45,7 @@ val subscription = myButton.actionEvents().subscribe { println("Pressed!") }
 val myButton = Button("Press Me")
 
 val countBinding = myButtonActionEvents().map { 1 }
-    .startWith(0)
-    .scan { x,y -> x + y }
+    .scan(0, { x,y -> x + y })
     .map { it.toString() }
     .toBinding()
     

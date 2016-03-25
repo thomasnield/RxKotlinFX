@@ -53,7 +53,7 @@ val myLabel = Label()
 myLabel.textProperty().bind(countBinding)
 ```
 
-#####Observable of ObservableList Adds
+#####Observable of ObservableList Events
 ```kotlin
 val items = FXCollections.observableArrayList("Alpha", "Beta", "Gamma")
 

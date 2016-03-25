@@ -46,7 +46,7 @@ val myButton = Button("Press Me")
 
 val countBinding = myButtonActionEvents().map { 1 }
     .startWith(0)
-    .reduce { x,y -> x + y }
+    .scan { x,y -> x + y }
     .map { it.toString() }
     .toBinding()
     

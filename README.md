@@ -33,7 +33,22 @@ Feel free to contribute and help streamline a pragmatic UI stack with Kotlin, Rx
 RxKotlinFX contains Kotlin extensions to [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) as well as additional `Observable` operators specific to JavaFX. It also is in exporatory stages to add helpful `Node` extension functions that return Observables. This exploration is inspired by the JavaFX/Kotlin interop project [TornadoFX](https://github.com/edvin/tornadofx). Where TornadoFX handles layouts, node extensions, DI, and other JavaFX/Kotlin interoperations, this library will seek to integrate RxJava with JavaFX in the same spirit using Kotlin. The vision is to add useful extensions that put `Observable` streams as properties and functions on JavaFX components, especially where `ObservableValue` properties are not readily available. 
 
 ###RxJavaFX Extensions
-The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static factories as extension functions. See the full list of extension functions [here](https://github.com/thomasnield/RxKotlinFX/blob/master/src/main/kotlin/rx/javafx/kt/Observables.kt). 
+The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static factories as extension functions. 
+
+|Target Type|Extension Function|Description|
+|---|---|---
+|Observable&lt;T>|toBinding()|Subscribes the `Observable<T>` to a JavaFX `Binding` implementation. Calling `dispose()` will unsubscribe from the `Observable<T>`
+|ObservableValue&lt;T>|toObservable()|Turns a JavaFX `ObservableValue<T>` into an RxJava `Observable<T>` that emits the latest value
+|ObservableValue&lt;T>|toObservableChanges()|Turns a JavaFX `ObservableValue<T>` into an RxJava `Observable<Change<T>>` that emits the old value and new value as a pair
+|Node, Window,  Scene|events(eventType: EventType<T>)| Creates an `Observable` emitting events of the given `EventType`
+|Node, MenuItem, ContextMenu |actionEvents()|Creates an `Observable` that emits an `ActionEvent` every time one occurs
+|ObservableList&lt;T>|onChangedObservable()|Returns an `Observable<ObservableList<T>>` that emits the entire `ObservableList<T>` every time it is modified.
+|ObservableList&lt;T>|additions()|Creates an `Observable<T>` emitting `T` items that were added to the `ObservableList<T>`
+|ObservableList&lt;T>|removals()|Creates an `Observable<T>` emitting `T` items that were removed to the `ObservableList<T>`
+|ObservableList&lt;T>|updates()|Creates an `Observable<T>` emitting `T` items whose specified properties were updated in the `ObservableList<T>`
+|ObservableList&lt;T>|changes()|Creates an `Observable<ListChange<T>>` emitting `ListChange<T>` items, which pairs each item with an `ADDED`, `REMOVED`, or `UPDATED` flag
+|ObservableList&lt;T>|distinctChanges()|Creates an `Observable<ListChange<T>>` emitting *distinct* `ListChange<T>` items. It  will only emit the first `ADDED` item `T` and not emit dupes, and will only emit the `REMOVED` item `T` when no more dupes exist
+|ObservableList&lt;T>|distinctChanges(mapper: (T) -> R)|Creates an `Observable<ListChange<T>>` emitting *distinct* `ListChange<T>` items based off the `mapper`'s definition of a distinct value `R`. It  will only emit the first `ADDED` item `T` and not emit dupes, and will only emit the `REMOVED` item `T` when no more dupes exist
 
 #####Observable of Button ActionEvents
 ```kotlin

@@ -112,10 +112,18 @@ fun <T> ObservableList<T>.changes() =JavaFxObservable.fromObservableListChanges(
  */
 fun <T> ObservableList<T>.distinctChanges() = JavaFxObservable.fromObservableListDistinctChanges(this)
 /**
+ * Emits distinctly added and removed items item from an ObservableList.
+ * If dupe mapped R items with identical hashcode/equals evaluations are added to an ObservableList, only the first one will fire an ADDED T item.
+ * When the last dupe is removed, only then will it fire a REMOVED T item.
+ * @return An Observable emitting changed mapped items with an ADDED, REMOVED, or UPDATED flags
+ */
+fun <T,R> ObservableList<T>.distinctChanges(mapper: ((T) -> R)) = JavaFxObservable.fromObservableListDistinctChanges(this,mapper)
+
+/**
  * Emits distinctly added and removed mappings to each R item from an ObservableList.
  * If dupe mapped R items with identical hashcode/equals evaluations are added to an ObservableList, only the first one will fire an ADDED R item.
  * When the last dupe is removed, only then will it fire a REMOVED R item.
  * @return An Observable emitting changed mapped items with an ADDED, REMOVED, or UPDATED flags
  */
-fun <T,R> ObservableList<T>.distinctChanges(mapper: ((T) -> R)) = JavaFxObservable.fromObservableListDistinctChanges(this,mapper)
+fun <T,R> ObservableList<T>.distinctMappingChanges(mapper: ((T) -> R)) = JavaFxObservable.fromObservableListDistinctMappings(this,mapper)
 

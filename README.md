@@ -59,7 +59,7 @@ val subscription = myButton.actionEvents().subscribe { println("Pressed!") }
 ```kotlin
 val myButton = Button("Press Me")
 
-val countBinding = myButtonActionEvents().map { 1 }
+val countBinding = myButton.actionEvents().map { 1 }
     .scan(0, { x,y -> x + y })
     .map { it.toString() }
     .toBinding()

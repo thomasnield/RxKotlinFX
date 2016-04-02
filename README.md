@@ -44,7 +44,7 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 |Node, MenuItem, ContextMenu |actionEvents()|Creates an `Observable` that emits an `ActionEvent` every time one occurs
 |ObservableList&lt;T>|onChangedObservable()|Returns an `Observable<ObservableList<T>>` that emits the entire `ObservableList<T>` every time it is modified.
 |ObservableList&lt;T>|additions()|Creates an `Observable<T>` emitting `T` items that were added to the `ObservableList<T>`
-|ObservableList&lt;T>|removals()|Creates an `Observable<T>` emitting `T` items that were removed to the `ObservableList<T>`
+|ObservableList&lt;T>|removals()|Creates an `Observable<T>` emitting `T` items that were removed from the `ObservableList<T>`
 |ObservableList&lt;T>|updates()|Creates an `Observable<T>` emitting `T` items whose specified properties were updated in the `ObservableList<T>`
 |ObservableList&lt;T>|changes()|Creates an `Observable<ListChange<T>>` emitting `ListChange<T>` items, which pairs each item with an `ADDED`, `REMOVED`, or `UPDATED` flag
 |ObservableList&lt;T>|distinctChanges()|Creates an `Observable<ListChange<T>>` emitting *distinct* `ListChange<T>` items. It  will only emit the first `ADDED` item `T` and not emit dupes, and will only emit the `REMOVED` item `T` when no more dupes exist
@@ -59,7 +59,7 @@ val subscription = myButton.actionEvents().subscribe { println("Pressed!") }
 ```kotlin
 val myButton = Button("Press Me")
 
-val countBinding = myButtonActionEvents().map { 1 }
+val countBinding = myButton.actionEvents().map { 1 }
     .scan(0, { x,y -> x + y })
     .map { it.toString() }
     .toBinding()

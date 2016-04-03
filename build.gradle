@@ -48,7 +48,7 @@ signing {
 
 group = "com.github.thomasnield"
 archivesBaseName = "rxkotlinfx"
-version = "0.0.2"
+version = "0.0.4"
 
 uploadArchives {
     repositories {

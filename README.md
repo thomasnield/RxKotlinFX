@@ -39,7 +39,7 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 |---|---|---
 |Observable&lt;T>|toBinding()|Subscribes the `Observable<T>` to a JavaFX `Binding` implementation. Calling `dispose()` will unsubscribe from the `Observable<T>`
 |Property&lt;T>|bind(observable: Observable&lt;T>)|Binds a `Property<T>` to the emissions of an `Observable<T>`, and returns the `Binding`
-|Binding|addTo(compositeBinding: CompositeBinding)|Adds the `Binding` to a `CompositeBinding`, and returns the `Binding`
+|Binding&lt;T>|addTo(compositeBinding: CompositeBinding)|Adds the `Binding` to a `CompositeBinding`, and returns the `Binding`
 |ObservableValue&lt;T>|toObservable()|Turns a JavaFX `ObservableValue<T>` into an RxJava `Observable<T>` that emits the latest value
 |ObservableValue&lt;T>|toObservableChanges()|Turns a JavaFX `ObservableValue<T>` into an RxJava `Observable<Change<T>>` that emits the old value and new value as a pair
 |Node, Window,  Scene|events(eventType: EventType<T>)| Creates an `Observable` emitting events of the given `EventType`

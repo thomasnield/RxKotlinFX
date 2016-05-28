@@ -2,6 +2,8 @@ package rx.javafx.kt
 
 import javafx.beans.value.ObservableValue
 import javafx.collections.ObservableList
+import javafx.collections.ObservableMap
+import javafx.collections.ObservableSet
 import javafx.event.Event
 import javafx.event.EventType
 import javafx.scene.Node
@@ -11,6 +13,7 @@ import javafx.scene.control.MenuItem
 import javafx.stage.Window
 import javafx.stage.WindowEvent
 import rx.Observable
+import rx.javafx.sources.SetChange
 import rx.observables.JavaFxObservable
 import rx.subscribers.JavaFxSubscriber
 
@@ -126,4 +129,47 @@ fun <T,R> ObservableList<T>.distinctChanges(mapper: ((T) -> R)) = JavaFxObservab
  * @return An Observable emitting changed mapped items with an ADDED, REMOVED, or UPDATED flags
  */
 fun <T,R> ObservableList<T>.distinctMappingChanges(mapper: ((T) -> R)) = JavaFxObservable.fromObservableListDistinctMappings(this,mapper)
+
+/**
+ * Creates an observable that emits an ObservableMap every time it is modified
+ * @return An Observable emitting the ObservableMap each time it changes
+ */
+fun <K,T> ObservableMap<K, T>.onChangedObservable() = JavaFxObservable.fromObservableMap(this)
+/**
+ * Creates an observable that emits all removal items from an ObservableMap
+ * @return An Observable emitting items removed from the ObservableMap
+ */
+fun <K,T> ObservableMap<K,T>.removals() = JavaFxObservable.fromObservableMapRemovals(this)
+/**
+ * Creates an observable that emits all additions to an ObservableMap
+ * @return An Observable emitting items added to the ObservableMap
+ */
+fun <K,T> ObservableMap<K,T>.additions() = JavaFxObservable.fromObservableMapAdds(this)
+/**
+ * Emits all added, removed, and updated items from an ObservableMap
+ * @return An Observable emitting changed items with an ADDED, REMOVED, or UPDATED flags
+ */
+fun <K,T> ObservableMap<K,T>.changes() = JavaFxObservable.fromObservableMapChanges(this)
+
+/**
+ * Creates an observable that emits an ObservableSet every time it is modified
+ * @return An Observable emitting the ObservableSet each time it changes
+ */
+fun <T> ObservableSet<T>.onChangedObservable() = JavaFxObservable.fromObservableSet(this)
+
+/**
+ * Creates an observable that emits all removal items from an ObservableSet
+ * @return An Observable emitting items removed from the ObservableSet
+ */
+fun <T> ObservableSet<T>.removals() = JavaFxObservable.fromObservableSetRemovals(this)
+/**
+ * Creates an observable that emits all additions to an ObservableSet
+ * @return An Observable emitting items added to the ObservableSet
+ */
+fun <T> ObservableSet<T>.additions() = JavaFxObservable.fromObservableSetAdds(this)
+/**
+ * Emits all added, removed, and updated items from an ObservableSet
+ * @return An Observable emitting changed items with an ADDED, REMOVED, or UPDATED flags
+ */
+fun <T> ObservableSet<SetChange<T>>.changes() =JavaFxObservable.fromObservableSetChanges(this)
 

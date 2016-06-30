@@ -24,7 +24,17 @@ fun <T> Observable<T>.toBinding() = JavaFxSubscriber.toBinding(this)
 /**
  * Turns an Observable into a JavaFX Binding. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Observable<T>.toBinding(errorHandler: (Throwable) -> Unit) = JavaFxSubscriber.toBinding(this,errorHandler)
+fun <T> Observable<T>.toBinding(errorHandler: (Throwable) -> Unit) = JavaFxSubscriber.toLazyBinding(this,errorHandler)
+
+/**
+ * Turns an Observable into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Observable<T>.toLazyBinding() = JavaFxSubscriber.toBinding(this)
+/**
+ * Turns an Observable intolazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Observable<T>.toLazyBinding(errorHandler: (Throwable) -> Unit) = JavaFxSubscriber.toLazyBinding(this,errorHandler)
+
 /**
  * Create an rx Observable from a javafx ObservableValue
  * @param <T>          the type of the observed value

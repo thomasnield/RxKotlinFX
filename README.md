@@ -38,6 +38,7 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 |Target Type|Extension Function|Description|
 |---|---|---
 |Observable&lt;T>|toBinding()|Subscribes the `Observable<T>` to a JavaFX `Binding` implementation. Calling `dispose()` will unsubscribe from the `Observable<T>`
+|Observable&lt;T>|toLazyBinding()|Subscribes the `Observable<T>` to a lazy JavaFX `Binding` implementation, delaying subscription until a value is needed. Calling `dispose()` will unsubscribe from the `Observable<T>`
 |Property&lt;T>|bind(observable: Observable&lt;T>)|Binds a `Property<T>` to the emissions of an `Observable<T>`, and returns the `Binding`
 |Binding&lt;T>|addTo(compositeBinding: CompositeBinding)|Adds the `Binding` to a `CompositeBinding`, and returns the `Binding`
 |ObservableValue&lt;T>|toObservable()|Turns a JavaFX `ObservableValue<T>` into an RxJava `Observable<T>` that emits the latest value
@@ -52,7 +53,7 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 |ObservableList&lt;T>|distinctChanges()|Creates an `Observable<ListChange<T>>` emitting *distinct* `ListChange<T>` items. It  will only emit the first `ADDED` item `T` and not emit dupes, and will only emit the `REMOVED` item `T` when no more dupes exist
 |ObservableList&lt;T>|distinctChanges(mapper: (T) -> R)|Creates an `Observable<ListChange<T>>` emitting *distinct* `ListChange<T>` items based off the `mapper`'s definition of a distinct value `R`. It  will only emit the first `ADDED` item `T` and not emit dupes, and will only emit the `REMOVED` item `T` when no more dupes exist
 |ObservableList&lt;T>|distinctMappingChanges(mapper: (T) -> R)|Creates an `Observable<ListChange<R>>` emitting *distinct* `ListChange<R>` mappings based off the `mapper`'s definition of a distinct value `R`. It  will only emit the first `ADDED` item `R` and not emit dupes, and will only emit the `REMOVED` item `R` when no more dupes exist
-
+to
 #####Observable of Button ActionEvents
 ```kotlin
 val myButton = Button("Press Me")

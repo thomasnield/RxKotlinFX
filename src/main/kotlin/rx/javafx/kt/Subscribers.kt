@@ -18,14 +18,21 @@ fun <T> Property<T>.bind(observable: Observable<T>): Binding<T> {
     return binding
 }
 
-/**
- * Add this `Binding` to the provided `CompositeBinding`, and returns itself
- * @return `Binding`
- */
+@Deprecated("Use addTo()")
 fun <T> Binding<T>.addto(compositeBinding: CompositeBinding): Binding<T> {
     compositeBinding.add(this)
     return this
 }
+
+/**
+ * Add this `Binding` to the provided `CompositeBinding`, and returns itself
+ * @return `Binding`
+ */
+fun <T> Binding<T>.addTo(compositeBinding: CompositeBinding): Binding<T> {
+    compositeBinding.add(this)
+    return this
+}
+
 
 operator fun <T> CompositeBinding.plusAssign(binding: Binding<T>) = add(binding)
 

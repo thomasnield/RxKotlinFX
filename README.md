@@ -53,7 +53,8 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 |ObservableList&lt;T>|distinctChanges()|Creates an `Observable<ListChange<T>>` emitting *distinct* `ListChange<T>` items. It  will only emit the first `ADDED` item `T` and not emit dupes, and will only emit the `REMOVED` item `T` when no more dupes exist
 |ObservableList&lt;T>|distinctChanges(mapper: (T) -> R)|Creates an `Observable<ListChange<T>>` emitting *distinct* `ListChange<T>` items based off the `mapper`'s definition of a distinct value `R`. It  will only emit the first `ADDED` item `T` and not emit dupes, and will only emit the `REMOVED` item `T` when no more dupes exist
 |ObservableList&lt;T>|distinctMappingChanges(mapper: (T) -> R)|Creates an `Observable<ListChange<R>>` emitting *distinct* `ListChange<R>` mappings based off the `mapper`'s definition of a distinct value `R`. It  will only emit the first `ADDED` item `R` and not emit dupes, and will only emit the `REMOVED` item `R` when no more dupes exist
-to
+
+
 #####Observable of Button ActionEvents
 ```kotlin
 val myButton = Button("Press Me")
@@ -90,6 +91,34 @@ items.add("Epsilon")
 ADDED Delta
 ADDED Epsilon
 ```
+
+#####Turning an ObservableList into a Hot Concatenation
+
+```kotlin
+ val observableList = FXCollections.observableArrayList<String>()
+
+observableList.onChangedObservable()
+        .flatMap {
+            it.toObservable().map { it.length }
+                    .map { it.toString() }
+                    .reduce { s1,s2 -> s1 + "|"  + s2  }
+        }
+        .subscribe { println(it) }
+
+observableList.setAll("Alpha", "Beta", "Gamma")
+observableList.add("Delta")
+observableList.add("Epsilon")
+observableList.remove("Alpha")
+
+```
+######OUTPUT
+```
+5|4|5
+5|4|5|5
+5|4|5|5|7
+4|5|5|7
+```
+
 
 #####Using and Disposing CompositeBinding
 ```kotlin

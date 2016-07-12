@@ -95,7 +95,7 @@ ADDED Epsilon
 #####Turning an ObservableList into a Hot Concatenation
 
 ```kotlin
- val observableList = FXCollections.observableArrayList<String>()
+val observableList = FXCollections.observableArrayList<String>()
 
 observableList.onChangedObservable()
         .flatMap {

@@ -94,9 +94,6 @@ ADDED Epsilon
 
 #####Turning an ObservableList into a Hot Concatenation
 
-Call `toBinding()` instead of `subscribe()` to return a `Binding<String>` holding the `ObservableList`'s latest concatenation off its items. Emitting an `ObservableList<T>` every time it changes is a VERY powerful pattern.
-
-
 ```kotlin
 val observableList = FXCollections.observableArrayList<String>()
 

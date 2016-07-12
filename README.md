@@ -94,6 +94,8 @@ ADDED Epsilon
 
 #####Turning an ObservableList into a Hot Concatenation
 
+Call `toBinding()` instead of `Subscriber` to return a `Binding<String>` holding the `ObservableList`'s latest concatenation off its items. 
+
 ```kotlin
 val observableList = FXCollections.observableArrayList<String>()
 
@@ -118,6 +120,8 @@ observableList.remove("Alpha")
 5|4|5|5|7
 4|5|5|7
 ```
+
+Pushing an `ObservableList<T>` through an `Observable<ObservableList<T>>` every time it changes is a VERY powerful pattern.
 
 
 #####Using and Disposing CompositeBinding

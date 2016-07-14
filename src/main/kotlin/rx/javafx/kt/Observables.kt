@@ -9,6 +9,7 @@ import javafx.event.EventType
 import javafx.scene.Node
 import javafx.scene.Scene
 import javafx.scene.control.ContextMenu
+import javafx.scene.control.Dialog
 import javafx.scene.control.MenuItem
 import javafx.stage.Window
 import javafx.stage.WindowEvent
@@ -183,3 +184,8 @@ fun <T> ObservableSet<T>.additions() = JavaFxObservable.fromObservableSetAdds(th
  */
 fun <T> ObservableSet<SetChange<T>>.changes() =JavaFxObservable.fromObservableSetChanges(this)
 
+
+/**
+ * Emits the response `T` for a given `Dialog<T>`. If no response is provided the Observable will be empty.
+ */
+fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromDialogSource(this)

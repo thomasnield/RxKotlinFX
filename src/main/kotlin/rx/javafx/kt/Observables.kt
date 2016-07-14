@@ -188,4 +188,4 @@ fun <T> ObservableSet<SetChange<T>>.changes() =JavaFxObservable.fromObservableSe
 /**
  * Emits the response `T` for a given `Dialog<T>`. If no response is provided the Observable will be empty.
  */
-fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromDialogSource(this)
+fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromKDialog(this)

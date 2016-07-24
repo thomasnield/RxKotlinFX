@@ -146,6 +146,26 @@ val bindings = CompositeBinding(binding1,binding2)
 bindings.dispose()
 ```
 
+#####Using a CompositeObservable
+A `CompositeObservable` is effectivey an `Observable.merge()` but it allows adding and removing Observables at any time. This is helpful for centralizing UI events into a model. Read more about the [`CompositeObservable` here](https://github.com/ReactiveX/RxJavaFX/blob/0.x/README.md#compositeobservable)
+
+```kotlin
+val compositeObservable = CompositeObservable()
+
+//this subscriber will receive emissions from source1 and source2
+compositeObservable.subscribe { doSomethingWith(it) } 
+
+val source1: Observable<Int> = ...
+compositeObservable += source1
+
+val source2: Observable<Int> = ...
+compositeObservable += source2
+
+//subscriber will no longer receive emissions from source1
+compositeObservable -= source1 
+
+```
+
 ###Operators
 RxKotlinFX has a growing list of operators placed as extension functions onto `Observable` that aid interoperability with JavaFX.
 

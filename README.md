@@ -43,6 +43,7 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 |Binding&lt;T>|addTo(compositeBinding: CompositeBinding)|Adds the `Binding` to a `CompositeBinding`, and returns the `Binding`
 |ObservableValue&lt;T>|toObservable()|Turns a JavaFX `ObservableValue<T>` into an RxJava `Observable<T>` that emits the latest value
 |ObservableValue&lt;T>|toObservableChanges()|Turns a JavaFX `ObservableValue<T>` into an RxJava `Observable<Change<T>>` that emits the old value and new value as a pair
+|Dialog&lt;T>|toObservable&lt;T>|Returns an `Observable<T>` that emits the given result of `Dialog<T>`. Will be empty if no response. 
 |Node, Window,  Scene|events(eventType: EventType<T>)| Creates an `Observable` emitting events of the given `EventType`
 |Node, MenuItem, ContextMenu |actionEvents()|Creates an `Observable` that emits an `ActionEvent` every time one occurs
 |ObservableList&lt;T>|onChangedObservable()|Returns an `Observable<ObservableList<T>>` that emits the entire `ObservableList<T>` every time it is modified.
@@ -119,6 +120,14 @@ observableList.remove("Alpha")
 4|5|5|7
 ```
 
+#####Using a Dialog or Alert
+
+```kotlin
+val dialog = Alert(AlertType.CONFIRMATION, "Are you sure you want to continue?")
+
+dialog.toObservable().filter { it == ButtonType.YES }
+	.subscribe { println("You pressed YES") } 
+```
 
 #####Using and Disposing CompositeBinding
 ```kotlin

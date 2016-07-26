@@ -3,6 +3,7 @@ package rx.javafx.kt
 import javafx.beans.binding.Binding
 import javafx.beans.property.Property
 import rx.Observable
+import rx.javafx.sources.CompositeObservable
 import rx.subscriptions.CompositeBinding
 
 
@@ -30,6 +31,11 @@ fun <T> Binding<T>.addto(compositeBinding: CompositeBinding): Binding<T> {
  */
 fun <T> Binding<T>.addTo(compositeBinding: CompositeBinding): Binding<T> {
     compositeBinding.add(this)
+    return this
+}
+
+fun <T> Observable<T>.addTo(compositeObservable: CompositeObservable<T>): Observable<T> {
+    compositeObservable += this
     return this
 }
 

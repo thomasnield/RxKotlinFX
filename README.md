@@ -1,6 +1,10 @@
 # RxKotlinFX
 Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) library.
 
+This framework works especially well with [TornadoFX](https://github.com/edvin/tornadofx). See a fully functional demo [here!](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo)!
+
+![](http://i.imgur.com/UJxxemy.gif)
+
 ## Binaries
 
 Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cio.reactivex.rxjavafx).

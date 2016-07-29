@@ -3,7 +3,7 @@ Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) libra
 
 This framework works especially well with [TornadoFX](https://github.com/edvin/tornadofx). See a fully functional demo [here!](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo)
 
-![](http://imgur.com/a/6Z3tM)
+![](http://i.imgur.com/KMJQX9W.gif)
 
 ## Binaries
 

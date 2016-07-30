@@ -1,5 +1,7 @@
 # RxKotlinFX
-Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) library.
+Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) library, and the convergence of [RxJava](https://github.com/ReactiveX/RxJava), [JavaFX](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm), and [Kotlin](https://kotlinlang.org/). 
+
+![](http://i.imgur.com/Bhh5CX4.png)
 
 This framework works especially well with [TornadoFX](https://github.com/edvin/tornadofx). See a fully functional demo [here!](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo)
 

@@ -1,9 +1,5 @@
 # RxKotlinFX
-Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) library, and the convergence of [RxJava](https://github.com/ReactiveX/RxJava), [JavaFX](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm), and [Kotlin](https://kotlinlang.org/). 
-
-![](http://i.imgur.com/Bhh5CX4.png)
-
-This framework works especially well with [TornadoFX](https://github.com/edvin/tornadofx). See a fully functional demo [here!](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo)
+Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) library. This framework works especially well with [TornadoFX](https://github.com/edvin/tornadofx). See a fully functional demo [here!](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo)
 
 ![](http://i.imgur.com/KMJQX9W.gif)
 
@@ -35,6 +31,10 @@ dependencies {
 Feel free to contribute and help streamline a pragmatic UI stack with Kotlin, RxJava, and JavaFX. Speaking of stacks, this project may be used in conjunction with [TornadoFX](https://github.com/edvin/tornadofx) and [RxKotlin](https://github.com/ReactiveX/RxKotlin). Please make sure no extension naming conventions conflict with these two other libraries :)
 
 ##Features
+
+RxKotlinFX is the convergence of interoperability between [RxJava](https://github.com/ReactiveX/RxJava), [JavaFX](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm), and [Kotlin](https://kotlinlang.org/). 
+
+![](http://i.imgur.com/Bhh5CX4.png)
 
 RxKotlinFX contains Kotlin extensions to [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) as well as additional `Observable` operators specific to JavaFX. It also is in exporatory stages to add helpful `Node` extension functions that return Observables. This exploration is inspired by the JavaFX/Kotlin interop project [TornadoFX](https://github.com/edvin/tornadofx). Where TornadoFX handles layouts, node extensions, DI, and other JavaFX/Kotlin interoperations, this library will seek to integrate RxJava with JavaFX in the same spirit using Kotlin. The vision is to add useful extensions that put `Observable` streams as properties and functions on JavaFX components, especially where `ObservableValue` properties are not readily available. 
 

@@ -3,6 +3,11 @@ Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) libra
 
 ![](http://i.imgur.com/KMJQX9W.gif)
 
+
+##Documentation
+[Learning RxJava with JavaFX (EAP)](https://www.gitbook.com/book/thomasnield/rxjavafx-guide/details)
+
+
 ## Binaries
 
 Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cio.reactivex.rxjavafx).

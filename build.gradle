@@ -23,8 +23,8 @@ dependencies {
 }
 
 dependencies {
-    compile 'io.reactivex:rxjava:1.1.7'
-    compile 'io.reactivex:rxjavafx:0.1.4'
+    compile 'io.reactivex:rxjava:1.1.10'
+    compile 'io.reactivex:rxjavafx:0.2.0'
     testCompile 'junit:junit:4.12'
 }
 
@@ -48,7 +48,7 @@ signing {
 
 group = "com.github.thomasnield"
 archivesBaseName = "rxkotlinfx"
-version = "0.1.4"
+version = "0.2.0"
 
 uploadArchives {
     repositories {

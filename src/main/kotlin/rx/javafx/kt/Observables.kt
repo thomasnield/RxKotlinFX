@@ -194,9 +194,6 @@ fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromDialog(this)
 /**
  * Adds the `Observable` to the `CompositeObservable`, and subscribes it to all existing and future Subscribers
  */
-operator fun <T> CompositeObservable<T>.plusAssign(observable: Observable<T>) = add(observable)
-
-/**
- * Removes the `Observable` from the `CompositeObservable`, and unsubscribes it from all Subscribers
- */
-operator fun <T> CompositeObservable<T>.minusAssign(observable: Observable<T>) = remove(observable)
+operator fun <T> CompositeObservable<T>.plusAssign(observable: Observable<T>) {
+    add(observable)
+}

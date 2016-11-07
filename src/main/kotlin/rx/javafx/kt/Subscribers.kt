@@ -3,8 +3,10 @@ package rx.javafx.kt
 import javafx.beans.binding.Binding
 import javafx.beans.property.Property
 import rx.Observable
+import rx.Subscription
 import rx.javafx.sources.CompositeObservable
 import rx.subscriptions.CompositeBinding
+import rx.subscriptions.CompositeSubscription
 
 
 /**
@@ -19,12 +21,6 @@ fun <T> Property<T>.bind(observable: Observable<T>): Binding<T> {
     return binding
 }
 
-@Deprecated("Use addTo()")
-fun <T> Binding<T>.addto(compositeBinding: CompositeBinding): Binding<T> {
-    compositeBinding.add(this)
-    return this
-}
-
 /**
  * Add this `Binding` to the provided `CompositeBinding`, and returns itself
  * @return `Binding`
@@ -34,9 +30,14 @@ fun <T> Binding<T>.addTo(compositeBinding: CompositeBinding): Binding<T> {
     return this
 }
 
-fun <T> Observable<T>.addTo(compositeObservable: CompositeObservable<T>): Observable<T> {
-    compositeObservable += this
-    return this
+/**
+ * Add this `Observable` to the provided `CompositeObservable`, and return the `Subscription` that links them.
+ * You can optionally provide a `CompositeSubscription` to automatically add the `Subscription` to
+ */
+fun <T> Observable<T>.addTo(compositeObservable: CompositeObservable<T>, compositeSubscription: CompositeSubscription? = null): Subscription {
+    val subscription = compositeObservable.add(this)
+    compositeSubscription?.let { it.add(subscription) }
+    return subscription
 }
 
 

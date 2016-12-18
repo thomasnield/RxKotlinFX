@@ -15,8 +15,13 @@ import rx.subscriptions.CompositeSubscription
  * The `Binding` is also returned so caller can be dispose it later if needed
  * @return `Binding`
  */
-fun <T> Property<T>.bind(observable: Observable<T>): Binding<T> {
-    val binding = observable.toBinding()
+fun <T> Property<T>.bind(observable: Observable<T>, actionOp: (BindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
+    val transformer = actionOp?.let {
+        val sideEffects = BindingSideEffects<T>()
+        it.invoke(sideEffects)
+        sideEffects.transformer
+    }
+    val binding = (transformer?.let { observable.compose(it) }?:observable).toBinding()
     bind(binding)
     return binding
 }
@@ -36,7 +41,7 @@ fun <T> Binding<T>.addTo(compositeBinding: CompositeBinding): Binding<T> {
  */
 fun <T> Observable<T>.addTo(compositeObservable: CompositeObservable<T>, compositeSubscription: CompositeSubscription? = null): Subscription {
     val subscription = compositeObservable.add(this)
-    compositeSubscription?.let { it.add(subscription) }
+    compositeSubscription?.apply { this.add(subscription) }
     return subscription
 }
 
@@ -48,3 +53,29 @@ operator fun CompositeBinding.plusAssign(compositeBinding: CompositeBinding) = a
 operator fun <T> CompositeBinding.minusAssign(binding: Binding<T>) = remove(binding)
 
 operator fun CompositeBinding.minusAssign(compositeBinding: CompositeBinding) = remove(compositeBinding)
+
+class BindingSideEffects<T> {
+    private var onNextAction: ((T) -> Unit)? = null
+    private var onCompletedAction: (() -> Unit)? = null
+    private var onErrorAction: ((ex: Throwable) -> Unit)? = null
+
+    fun onNext(onNext: (T) -> Unit): Unit {
+        onNextAction = onNext
+    }
+
+    fun onCompleted(onCompleted: () -> Unit): Unit {
+        onCompletedAction = onCompleted
+    }
+
+    fun onError(onError: (ex: Throwable) -> Unit): Unit {
+        onErrorAction = onError
+    }
+
+    internal val transformer: Observable.Transformer<T, T> get() = Observable.Transformer<T, T> { obs ->
+        var withActions: Observable<T> = obs
+        withActions = onNextAction?.let { withActions.doOnNext(onNextAction) } ?: withActions
+        withActions = onCompletedAction?.let { withActions.doOnCompleted(onCompletedAction) } ?: withActions
+        withActions = onErrorAction?.let { withActions.doOnError(onErrorAction) } ?: withActions
+        withActions
+    }
+}

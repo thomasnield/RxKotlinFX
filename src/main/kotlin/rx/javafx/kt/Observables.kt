@@ -1,5 +1,6 @@
 package rx.javafx.kt
 
+import javafx.beans.binding.Binding
 import javafx.beans.value.ObservableValue
 import javafx.collections.ObservableList
 import javafx.collections.ObservableMap
@@ -22,11 +23,14 @@ import rx.subscribers.JavaFxSubscriber
 /**
  * Turns an Observable into a JavaFX Binding. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Observable<T>.toBinding() = JavaFxSubscriber.toBinding(this)
-/**
- * Turns an Observable into a JavaFX Binding. Calling the Binding's dispose() method will handle the unsubscription.
- */
-fun <T> Observable<T>.toBinding(errorHandler: (Throwable) -> Unit) = JavaFxSubscriber.toLazyBinding(this,errorHandler)
+fun <T> Observable<T>.toBinding(actionOp: (BindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
+    val transformer = actionOp?.let {
+        val sideEffects = BindingSideEffects<T>()
+        it.invoke(sideEffects)
+        sideEffects.transformer
+    }
+    return JavaFxSubscriber.toBinding((transformer?.let { this.compose(it) }?:this))
+}
 
 /**
  * Turns an Observable into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
@@ -197,3 +201,4 @@ fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromDialog(this)
 operator fun <T> CompositeObservable<T>.plusAssign(observable: Observable<T>) {
     add(observable)
 }
+

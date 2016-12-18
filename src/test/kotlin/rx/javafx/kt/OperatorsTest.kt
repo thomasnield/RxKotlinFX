@@ -9,6 +9,7 @@ import rx.schedulers.Schedulers
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
 class OperatorsTest {
 
@@ -160,5 +161,28 @@ class OperatorsTest {
 
         latch.await(10,TimeUnit.SECONDS)
         Assert.assertTrue(value == 2)
+    }
+
+    @Test
+    fun bindingSideEffectsTest() {
+        val counter = AtomicInteger(0)
+        Observable.just(1,2,3)
+                .toBinding {
+                    onNext { counter.incrementAndGet() }
+                    onCompleted { counter.incrementAndGet() }
+                }
+
+        Assert.assertTrue(counter.get() == 4)
+    }
+
+    @Test
+    fun bindingSideEffectsErrorTest() {
+        val counter = AtomicInteger(0)
+        Observable.error<Unit>(Exception("Test"))
+                .toBinding {
+                    onError { counter.incrementAndGet() }
+                }
+
+        Assert.assertTrue(counter.get() == 1)
     }
 }

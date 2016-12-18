@@ -5,6 +5,7 @@ import internal.rx.javafx.kt.operators.OperatorEmissionCounter
 import javafx.application.Platform
 import rx.Observable
 import rx.schedulers.JavaFxScheduler
+import rx.transformers.JavaFxTransformers
 
 /**
  * Observes the emissions on the JavaFX Thread.
@@ -20,57 +21,56 @@ fun <T> Observable<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.getInstance(
 /**
  * Performs the provided onNext action on the FX thread
  */
-inline fun <T> Observable<T>.doOnNextFx(crossinline onNext: (T) -> Unit) = doOnNext {
+inline fun <T> Observable<T>.doOnNextFx(crossinline onNext: (T) -> Unit): Observable<T> = doOnNext {
     Platform.runLater { onNext.invoke(it) }
 }
 /**
  * Performs the provided onError action on the FX thread
  */
-inline fun <T> Observable<T>.doOnErrorFx(crossinline onError: (Throwable) -> Unit) = doOnError {
+inline fun <T> Observable<T>.doOnErrorFx(crossinline onError: (Throwable) -> Unit): Observable<T> = doOnError {
     Platform.runLater { onError.invoke(it) }
 }
 /**
  * Performs the provided onCompleted action on the FX thread
  */
-inline fun <T> Observable<T>.doOnCompletedFx(crossinline onCompleted: () -> Unit) = doOnCompleted {
+inline fun <T> Observable<T>.doOnCompletedFx(crossinline onCompleted: () -> Unit): Observable<T> = doOnCompleted {
     Platform.runLater { onCompleted.invoke() }
 }
 /**
  * Performs the provided onSubscribe action on the FX thread
  */
-inline fun <T> Observable<T>.doOnSubscribeFx(crossinline onSubscribe: () -> Unit) = doOnSubscribe {
+inline fun <T> Observable<T>.doOnSubscribeFx(crossinline onSubscribe: () -> Unit): Observable<T> = doOnSubscribe {
     Platform.runLater { onSubscribe.invoke() }
 }
 /**
  * Performs the provided onTerminate action on the FX thread
  */
-inline fun <T> Observable<T>.doOnTerminateFx(crossinline onTerminate: () -> Unit) = doOnTerminate {
+inline fun <T> Observable<T>.doOnTerminateFx(crossinline onTerminate: () -> Unit): Observable<T> = doOnTerminate {
     Platform.runLater { onTerminate.invoke() }
 }
 /**
  * Performs the provided onUnsubscribe action on the FX thread
  */
-inline fun <T> Observable<T>.doOnUnsubscribeFx(crossinline onUnsubscribe: () -> Unit) = doOnUnsubscribe {
+inline fun <T> Observable<T>.doOnUnsubscribeFx(crossinline onUnsubscribe: () -> Unit): Observable<T> = doOnUnsubscribe {
     Platform.runLater { onUnsubscribe.invoke() }
 }
 /**
  * Executes side effect with the accumulating count of emissions for each onNext() call
  */
-fun <T> Observable<T>.doOnNextCount(onNext: (Int) -> Unit) = lift<T>(
-        OperatorEmissionCounter(CountObserver(doOnNextCountAction = onNext))
-)
+fun <T> Observable<T>.doOnNextCount(onNext: (Int) -> Unit): Observable<in T> =
+        compose(JavaFxTransformers.doOnNextCount(onNext))
+
 /**
  * Executes side effect with the total count of emissions for the onCompleted() call
  */
-fun <T> Observable<T>.doOnCompletedCount(onCompleted: (Int) -> Unit) = lift<T>(
-        OperatorEmissionCounter(CountObserver(doOnCompletedCountAction = onCompleted))
-)
+fun <T> Observable<T>.doOnCompletedCount(onCompleted: (Int) -> Unit): Observable<in T> =
+        compose(JavaFxTransformers.doOnCompletedCount(onCompleted))
+
 /**
  * Executes side effect with the total count of emissions for an onError() call
  */
-fun <T> Observable<T>.doOnErrorCount(onError: (Int) -> Unit) = lift<T>(
-        OperatorEmissionCounter(CountObserver(doOnErrorCountAction = onError))
-)
+fun <T> Observable<T>.doOnErrorCount(onError: (Int) -> Unit): Observable<in T> =
+        compose(JavaFxTransformers.doOnErrorCount(onError))
 /**
  * Executes side effect on FX thread with the accumulating count of emissions for each onNext() call
  */

@@ -36,6 +36,7 @@ fun <T> Observable<T>.toBinding(actionOp: (BindingSideEffects<T>.() -> Unit)? = 
  * Turns an Observable into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
 fun <T> Observable<T>.toLazyBinding() = JavaFxSubscriber.toBinding(this)
+
 /**
  * Turns an Observable intolazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */

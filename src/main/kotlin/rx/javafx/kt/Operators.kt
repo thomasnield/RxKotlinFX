@@ -1,7 +1,5 @@
 package rx.javafx.kt
 
-import internal.rx.javafx.kt.operators.CountObserver
-import internal.rx.javafx.kt.operators.OperatorEmissionCounter
 import javafx.application.Platform
 import rx.Observable
 import rx.schedulers.JavaFxScheduler

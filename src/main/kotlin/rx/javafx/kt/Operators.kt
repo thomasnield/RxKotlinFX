@@ -2,6 +2,7 @@ package rx.javafx.kt
 
 import javafx.application.Platform
 import rx.Observable
+import rx.observables.ConnectableObservable
 import rx.schedulers.JavaFxScheduler
 import rx.transformers.JavaFxTransformers
 
@@ -15,6 +16,11 @@ fun <T> Observable<T>.observeOnFx() = observeOn(JavaFxScheduler.getInstance())
  * This is the same as calling Observable#subscribeOn(JavaFxScheduler.getInstance())
  */
 fun <T> Observable<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.getInstance())
+
+/**
+ * Starts emissions for this `ConnectableObservable` immediately and not wait for subscribers, and will persist regardless of subscribers being present
+ */
+fun <T> ConnectableObservable<T>.eagerConnect() = autoConnect().apply { subscribe().unsubscribe() }
 
 /**
  * Performs the provided onNext action on the FX thread

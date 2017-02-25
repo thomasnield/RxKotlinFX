@@ -8,14 +8,14 @@ import rx.transformers.JavaFxTransformers
 
 /**
  * Observes the emissions on the JavaFX Thread.
- * This is the same as calling Observable#observeOn(JavaFxScheduler.getInstance())
+ * This is the same as calling Observable#observeOn(JavaFxScheduler.platform())
  */
-fun <T> Observable<T>.observeOnFx() = observeOn(JavaFxScheduler.getInstance())
+fun <T> Observable<T>.observeOnFx() = observeOn(JavaFxScheduler.platform())
 /**
  * Instructs the source Observable to emit items on the JavaFX Thread.
- * This is the same as calling Observable#subscribeOn(JavaFxScheduler.getInstance())
+ * This is the same as calling Observable#subscribeOn(JavaFxScheduler.platform())
  */
-fun <T> Observable<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.getInstance())
+fun <T> Observable<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.platform())
 
 /**
  * Starts emissions for this `ConnectableObservable` immediately and not wait for subscribers, and will persist regardless of subscribers being present

@@ -58,6 +58,12 @@ fun <T> ObservableValue<T>.toObservable() = JavaFxObservable.valuesOf(this)
 fun <T> ObservableValue<T>.toObservableNonNull() = JavaFxObservable.nonNullValuesOf(this)
 
 /**
+ * Create an rx Observable from a javafx Observable, emitting it when an invalidation occurs
+ * @return an rx Observable emitting the JavaFX Observable every time it is invalidated
+ */
+fun javafx.beans.Observable.invalidations() = JavaFxObservable.invalidationsOf(this)
+
+/**
  * Create an rx Observable from a javafx ObservableValue, and emits changes with old and new value pairs
  * @param <T>          the type of the observed value
  * @return an Observable emitting values as the wrapped ObservableValue changes

@@ -14,33 +14,35 @@ import javafx.scene.control.Dialog
 import javafx.scene.control.MenuItem
 import javafx.stage.Window
 import javafx.stage.WindowEvent
-import rx.Observable
+import io.reactivex.Observable
 import rx.javafx.sources.CompositeObservable
 import rx.javafx.sources.SetChange
+import io.reactivex.Observables.JavaFxObservable
 import rx.observables.JavaFxObservable
+import rx.observers.JavaFxObserver
 import rx.subscribers.JavaFxSubscriber
 
 /**
  * Turns an Observable into a JavaFX Binding. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Observable<T>.toBinding(actionOp: (BindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
+fun <T> Observable<T>.toBinding(actionOp: (ObservableBindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
     val transformer = actionOp?.let {
-        val sideEffects = BindingSideEffects<T>()
+        val sideEffects = ObservableBindingSideEffects<T>()
         it.invoke(sideEffects)
         sideEffects.transformer
     }
-    return JavaFxSubscriber.toBinding((transformer?.let { this.compose(it) }?:this))
+    return JavaFxObserver.toBinding((transformer?.let { this.compose(it) }?:this))
 }
 
 /**
  * Turns an Observable into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Observable<T>.toLazyBinding() = JavaFxSubscriber.toBinding(this)
+fun <T> Observable<T>.toLazyBinding() = JavaFxObserver.toBinding(this)
 
 /**
  * Turns an Observable intolazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Observable<T>.toLazyBinding(errorHandler: (Throwable) -> Unit) = JavaFxSubscriber.toLazyBinding(this,errorHandler)
+fun <T> Observable<T>.toLazyBinding(errorHandler: (Throwable) -> Unit) = JavaFxObserver.toLazyBinding(this,errorHandler)
 
 /**
  * Create an rx Observable from a javafx ObservableValue

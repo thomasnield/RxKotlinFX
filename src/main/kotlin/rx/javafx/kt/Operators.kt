@@ -1,8 +1,8 @@
 package rx.javafx.kt
 
 import javafx.application.Platform
-import rx.Observable
-import rx.observables.ConnectableObservable
+import io.reactivex.Observable
+import io.reactivex.Observables.ConnectableObservable
 import rx.schedulers.JavaFxScheduler
 import rx.transformers.JavaFxTransformers
 

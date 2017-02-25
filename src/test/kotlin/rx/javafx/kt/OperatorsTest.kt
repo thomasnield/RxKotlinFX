@@ -4,7 +4,7 @@ import javafx.application.Platform
 import javafx.embed.swing.JFXPanel
 import org.junit.Assert
 import org.junit.Test
-import rx.Observable
+import io.reactivex.Observable
 import rx.schedulers.Schedulers
 import java.util.*
 import java.util.concurrent.CountDownLatch

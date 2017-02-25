@@ -1,6 +1,6 @@
 package rx.javafx.kt
 
-import rx.Observable
+import io.reactivex.Observable
 import java.util.Optional
 
 fun <T> Optional<T>.toObservable() = Observable.just(this)

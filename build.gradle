@@ -3,7 +3,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.5'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.6'
   }
 }
 
@@ -19,11 +19,11 @@ repositories {
 }
 
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.5'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.6'
 }
 
 dependencies {
-    compile 'io.reactivex:rxjavafx:2.0.1'
+    compile 'io.reactivex:rxjavafx:2.0.2'
     testCompile 'junit:junit:4.12'
 }
 
@@ -47,7 +47,7 @@ signing {
 
 group = "com.github.thomasnield"
 archivesBaseName = "rxkotlinfx"
-version = "2.0.1"
+version = "2.0.2"
 
 uploadArchives {
     repositories {

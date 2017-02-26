@@ -186,16 +186,16 @@ RxKotlinFX has a growing list of operators placed as extension functions onto `O
 |subscribeOnFx()|Schedules the source `Observable` to emit items on the JavaFX thread
 |doOnNextFx()|Executes the specified action on the FX thread for each emission
 |doOnErrorFx()|Executes the specified action on the FX thread when an error is emitted
-|doOnCompletedFx()|Executes the specified action on the FX thread when the `Observable` calls `onComplete()`
+|doOnCompleteFx()|Executes the specified action on the FX thread when the `Observable` calls `onComplete()`
 |doOnSubscribeFx()|Executes the specified action on the FX thread when the `Observable` is first subscribed
 |doOnTerminateFx()|Executes the specified action on the FX thread when the `Observable` calls `onComplete()` or `onError()`
-|doOnUnsubscribeFx()|Executes the specified action on the FX thread when the `Observable` is unsubscribed
+|doOnDisposeFx()|Executes the specified action on the FX thread when the `Observable` is unsubscribed
 |doOnNextCount()|Executes the specified action with the cumulative count of emissions for that emission
 |doOnErrorCount()|Executes the specified action with the cumulative count of emissions when an error is emitted
-|doOnCompletedCount()|Executes the specified action with the total emission count when `onComplete()` is called
+|doOnCompleteCount()|Executes the specified action with the total emission count when `onComplete()` is called
 |doOnNextCountFx()|Same as `doOnNextCount()` except action is executed on FX thread
 |doOnErrorCountFx()|Same as `doOnErrorCount()` except action is executed on FX thread
-|doOnCompletedCountFx()|Same as `doOnCompletedCount()` except action is executed on FX thread
+|doOnCompleteCountFx()|Same as `doOnCompleteCount()` except action is executed on FX thread
 
 The `doOnXXXCount()` operators are especially helpful for providing a status update of how many items have been "processed" by an `Observable`. 
 

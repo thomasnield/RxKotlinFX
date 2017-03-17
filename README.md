@@ -4,7 +4,7 @@ Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) libra
 ![](http://i.imgur.com/KMJQX9W.gif)
 
 
-##Documentation
+## Documentation
 [Learning RxJava with JavaFX (EAP)](https://www.gitbook.com/book/thomasnield/rxjavafx-guide/details)
 
 
@@ -32,10 +32,10 @@ dependencies {
     compile 'com.github.thomasnield:rxkotlinfx:x.y.z'
 }
 ```
-##Contributing
+## Contributing
 Feel free to contribute and help streamline a pragmatic UI stack with Kotlin, RxJava, and JavaFX. Speaking of stacks, this project may be used in conjunction with [TornadoFX](https://github.com/edvin/tornadofx) and [RxKotlin](https://github.com/ReactiveX/RxKotlin). Please make sure no extension naming conventions conflict with these two other libraries :)
 
-##Features
+## Features
 
 RxKotlinFX is the convergence of interoperability between [RxJava](https://github.com/ReactiveX/RxJava), [JavaFX](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm), and [Kotlin](https://kotlinlang.org/). 
 
@@ -43,7 +43,7 @@ RxKotlinFX is the convergence of interoperability between [RxJava](https://githu
 
 RxKotlinFX contains Kotlin extensions to [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) as well as additional `Observable` operators specific to JavaFX. It also is in exporatory stages to add helpful `Node` extension functions that return Observables. This exploration is inspired by the JavaFX/Kotlin interop project [TornadoFX](https://github.com/edvin/tornadofx). Where TornadoFX handles layouts, node extensions, DI, and other JavaFX/Kotlin interoperations, this library will seek to integrate RxJava with JavaFX in the same spirit using Kotlin. The vision is to add useful extensions that put `Observable` streams as properties and functions on JavaFX components, especially where `ObservableValue` properties are not readily available. 
 
-###RxJavaFX Extensions
+### RxJavaFX Extensions
 The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static factories as extension functions. 
 
 |Target Type|Extension Function|Description|
@@ -67,12 +67,12 @@ The core API implements [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) static
 |ObservableList&lt;T>|distinctMappingChanges(mapper: (T) -> R)|Creates an `Observable<ListChange<R>>` emitting *distinct* `ListChange<R>` mappings based off the `mapper`'s definition of a distinct value `R`. It  will only emit the first `ADDED` item `R` and not emit dupes, and will only emit the `REMOVED` item `R` when no more dupes exist
 
 
-#####Observable of Button ActionEvents
+##### Observable of Button ActionEvents
 ```kotlin
 val myButton = Button("Press Me")
 val subscription = myButton.actionEvents().subscribe { println("Pressed!") } 
 ```
-#####Creating a Reactive Binding
+##### Creating a Reactive Binding
 ```kotlin
 val myButton = Button("Press Me")
 
@@ -85,7 +85,7 @@ val myLabel = Label()
 myLabel.textProperty().bind(countBinding)
 ```
 
-#####Observable of ObservableList Events
+##### Observable of ObservableList Events
 ```kotlin
 val items = FXCollections.observableArrayList("Alpha", "Beta", "Gamma")
 
@@ -98,13 +98,13 @@ changes.filter { it.flag == Flag.ADDED }
 items.add("Delta")
 items.add("Epsilon")
 ```
-######OUTPUT
+###### OUTPUT
 ```
 ADDED Delta
 ADDED Epsilon
 ```
 
-#####Turning an ObservableList into a Hot Concatenation
+##### Turning an ObservableList into a Hot Concatenation
 
 ```kotlin
 val observableList = FXCollections.observableArrayList<String>()
@@ -123,7 +123,7 @@ observableList.add("Epsilon")
 observableList.remove("Alpha")
 
 ```
-######OUTPUT
+###### OUTPUT
 ```
 5|4|5
 5|4|5|5
@@ -131,7 +131,7 @@ observableList.remove("Alpha")
 4|5|5|7
 ```
 
-#####Using a Dialog or Alert
+##### Using a Dialog or Alert
 
 ```kotlin
 val dialog = Alert(AlertType.CONFIRMATION, "Are you sure you want to continue?")
@@ -140,7 +140,7 @@ dialog.toObservable().filter { it == ButtonType.YES }
 	.subscribe { println("You pressed YES") } 
 ```
 
-#####Using and Disposing CompositeBinding
+##### Using and Disposing CompositeBinding
 ```kotlin
 val binding1: Binding = ...
 val binding2: Binding = ... 
@@ -157,7 +157,7 @@ val bindings = CompositeBinding(binding1,binding2)
 bindings.dispose()
 ```
 
-#####Using a CompositeObservable
+##### Using a CompositeObservable
 A `CompositeObservable` is effectivey an `Observable.merge()` but it allows adding and removing Observables at any time. This is helpful for centralizing UI events into a model. Read more about the [`CompositeObservable` here](https://github.com/ReactiveX/RxJavaFX/blob/0.x/README.md#compositeobservable)
 
 ```kotlin
@@ -177,7 +177,7 @@ compositeObservable -= source1
 
 ```
 
-###Operators
+### Operators
 RxKotlinFX has a growing list of operators placed as extension functions onto `Observable` that aid interoperability with JavaFX.
 
 |Operator|Description|
@@ -208,7 +208,7 @@ source.map { it * 10 }
      .subsribe { doSomethingWith(it) }
 ```
 
-###Control Extensions
+### Control Extensions
 The rest of the project will likely add convenient extension functions to emit events as `Observable` values, [much like the TornadoFX project has done](https://github.com/edvin/tornadofx/blob/master/src/main/java/tornadofx/Nodes.kt). For example, helpful `Observable` extension functions and properties can be added to `TableView` and `ListView`, such as selection events.
 
 ```kotlin

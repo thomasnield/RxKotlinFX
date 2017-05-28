@@ -45,7 +45,6 @@ fun <T> Property<T>.bind(flowable: Flowable<T>, actionOp: (FlowableBindingSideEf
     bind(binding)
     return binding
 }
-@Deprecated("CompositeObservable has been deprecated")
 fun <T> Binding<T>.addTo(compositeBinding: CompositeBinding): Binding<T> {
     compositeBinding.add(this)
     return this

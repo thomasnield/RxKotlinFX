@@ -45,20 +45,13 @@ fun <T> Property<T>.bind(flowable: Flowable<T>, actionOp: (FlowableBindingSideEf
     bind(binding)
     return binding
 }
-
-/**
- * Add this `Binding` to the provided `CompositeBinding`, and returns itself
- * @return `Binding`
- */
+@Deprecated("CompositeObservable has been deprecated")
 fun <T> Binding<T>.addTo(compositeBinding: CompositeBinding): Binding<T> {
     compositeBinding.add(this)
     return this
 }
 
-/**
- * Add this `Observable` to the provided `CompositeObservable`, and return the `Subscription` that links them.
- * You can optionally provide a `CompositeSubscription` to automatically add the `Subscription` to
- */
+@Deprecated("CompositeObservable has been deprecated")
 fun <T> Observable<T>.addTo(compositeObservable: CompositeObservable<T>, compositeSubscription: CompositeDisposable? = null): Disposable {
     val subscription = compositeObservable.add(this)
     compositeSubscription?.apply { this.add(subscription) }

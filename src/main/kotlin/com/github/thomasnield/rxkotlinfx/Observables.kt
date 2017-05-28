@@ -283,9 +283,7 @@ fun <T> ObservableSet<SetChange<T>>.changes() = JavaFxObservable.changesOf(this)
  */
 fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromDialog(this)
 
-/**
- * Adds the `Observable` to the `CompositeObservable`, and subscribes it to all existing and future Subscribers
- */
+@Deprecated("CompositeObservable has been deprecated")
 operator fun <T> CompositeObservable<T>.plusAssign(observable: Observable<T>) {
     add(observable)
 }

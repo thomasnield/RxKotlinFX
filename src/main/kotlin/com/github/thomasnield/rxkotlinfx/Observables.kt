@@ -1,6 +1,6 @@
 package com.github.thomasnield.rxkotlinfx
 
-import io.reactivex.Flowable
+import io.reactivex.*
 import javafx.beans.binding.Binding
 import javafx.beans.value.ObservableValue
 import javafx.collections.ObservableList
@@ -15,7 +15,6 @@ import javafx.scene.control.Dialog
 import javafx.scene.control.MenuItem
 import javafx.stage.Window
 import javafx.stage.WindowEvent
-import io.reactivex.Observable
 import io.reactivex.rxjavafx.observables.JavaFxObservable
 import io.reactivex.rxjavafx.observers.JavaFxObserver
 import io.reactivex.rxjavafx.observers.JavaFxSubscriber
@@ -58,6 +57,42 @@ fun <T> Observable<T>.toLazyBinding() = JavaFxObserver.toBinding(this)
  * Turns a Flowable into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
 fun <T> Flowable<T>.toLazyBinding() = JavaFxSubscriber.toBinding(this)
+
+
+/**
+ * Turns a Single into a JavaFX Binding. Calling the Binding's dispose() method will handle the disposal.
+ */
+fun <T> Single<T>.toBinding(actionOp: (ObservableBindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
+    val transformer = actionOp?.let {
+        val sideEffects = ObservableBindingSideEffects<T>()
+        it.invoke(sideEffects)
+        sideEffects.transformer
+    }
+    return JavaFxObserver.toBinding((transformer?.let { this.toObservable().compose(it) }?:this.toObservable()))
+}
+
+/**
+ * Turns a Single into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Single<T>.toLazyBinding() = JavaFxObserver.toBinding(this.toObservable())
+
+
+/**
+ * Turns a Maybe into a JavaFX Binding. Calling the Binding's dispose() method will handle the disposal.
+ */
+fun <T> Maybe<T>.toBinding(actionOp: (ObservableBindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
+    val transformer = actionOp?.let {
+        val sideEffects = ObservableBindingSideEffects<T>()
+        it.invoke(sideEffects)
+        sideEffects.transformer
+    }
+    return JavaFxObserver.toBinding((transformer?.let { this.toObservable().compose(it) }?:this.toObservable()))
+}
+
+/**
+ * Turns a Maybe into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Maybe<T>.toLazyBinding() = JavaFxObserver.toBinding(this.toObservable())
 
 
 /**

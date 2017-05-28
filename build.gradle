@@ -3,7 +3,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.6'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-4'
   }
 }
 
@@ -19,11 +19,11 @@ repositories {
 }
 
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.6'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.2-4'
 }
 
 dependencies {
-    compile 'io.reactivex:rxjavafx:2.0.2'
+    compile 'io.reactivex.rxjava2:rxjavafx:2.1.0'
     testCompile 'junit:junit:4.12'
 }
 

@@ -1,8 +1,7 @@
 package com.github.thomasnield.rxkotlinfx
 
-import io.reactivex.Flowable
+import io.reactivex.*
 import javafx.application.Platform
-import io.reactivex.Observable
 import io.reactivex.flowables.ConnectableFlowable
 import io.reactivex.observables.ConnectableObservable
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler
@@ -23,6 +22,25 @@ fun <T> Flowable<T>.observeOnFx() = observeOn(JavaFxScheduler.platform())
 
 
 /**
+ * Observes the emissions on the JavaFX Thread.
+ * This is the same as calling Single#observeOn(JavaFxScheduler.platform())
+ */
+fun <T> Single<T>.observeOnFx() = observeOn(JavaFxScheduler.platform())
+
+/**
+ * Observes the emissions on the JavaFX Thread.
+ * This is the same as calling Maybe#observeOn(JavaFxScheduler.platform())
+ */
+fun <T> Maybe<T>.observeOnFx() = observeOn(JavaFxScheduler.platform())
+
+/**
+ * Observes the emissions on the JavaFX Thread.
+ * This is the same as calling Completable#observeOn(JavaFxScheduler.platform())
+ */
+fun Completable.observeOnFx() = observeOn(JavaFxScheduler.platform())
+
+
+/**
  * Instructs the source Observable to emit items on the JavaFX Thread.
  * This is the same as calling Observable#subscribeOn(JavaFxScheduler.platform())
  */
@@ -35,13 +53,28 @@ fun <T> Observable<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.platform())
 fun <T> Flowable<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.platform())
 
 /**
- * Starts emissions for this `ConnectableObservable` immediately and not wait for observers, and will persist regardless of observers being present
+ * Observes the emissions on the JavaFX Thread.
+ * This is the same as calling Single#subscribeOnFx(JavaFxScheduler.platform())
  */
-fun <T> ConnectableObservable<T>.eagerConnect() = autoConnect().apply { subscribe().dispose() }
+fun <T> Single<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.platform())
 
 /**
- * Starts emissions for this `ConnectableFlowable` immediately and not wait for subscribers, and will persist regardless of subscribers being present
+ * Observes the emissions on the JavaFX Thread.
+ * This is the same as calling Maybe#subscribeOnFx(JavaFxScheduler.platform())
  */
+fun <T> Maybe<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.platform())
+
+/**
+ * Observes the emissions on the JavaFX Thread.
+ * This is the same as calling Completable#subscribeOnFx(JavaFxScheduler.platform())
+ */
+fun Completable.subscribeOnFx() = subscribeOn(JavaFxScheduler.platform())
+
+
+@Deprecated("Deprecated with CompositeObservable", ReplaceWith("autoConnect().apply { subscribe().dispose() }"))
+fun <T> ConnectableObservable<T>.eagerConnect() = autoConnect().apply { subscribe().dispose() }
+
+@Deprecated("Deprecated with CompositeObservable", ReplaceWith("autoConnect().apply { subscribe().dispose() }"))
 fun <T> ConnectableFlowable<T>.eagerConnect() = autoConnect().apply { subscribe().dispose() }
 
 /**

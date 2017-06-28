@@ -50,13 +50,13 @@ fun <T> Flowable<T>.toBinding(actionOp: (FlowableBindingSideEffects<T>.() -> Uni
 /**
  * Turns an Observable into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Observable<T>.toLazyBinding() = JavaFxObserver.toBinding(this)
+fun <T> Observable<T>.toLazyBinding() = JavaFxObserver.toLazyBinding(this)
 
 
 /**
  * Turns a Flowable into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Flowable<T>.toLazyBinding() = JavaFxSubscriber.toBinding(this)
+fun <T> Flowable<T>.toLazyBinding() = JavaFxSubscriber.toLazyBinding(this)
 
 
 /**
@@ -74,7 +74,7 @@ fun <T> Single<T>.toBinding(actionOp: (ObservableBindingSideEffects<T>.() -> Uni
 /**
  * Turns a Single into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Single<T>.toLazyBinding() = JavaFxObserver.toBinding(this.toObservable())
+fun <T> Single<T>.toLazyBinding() = JavaFxObserver.toLazyBinding(this.toObservable())
 
 
 /**
@@ -92,7 +92,7 @@ fun <T> Maybe<T>.toBinding(actionOp: (ObservableBindingSideEffects<T>.() -> Unit
 /**
  * Turns a Maybe into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
-fun <T> Maybe<T>.toLazyBinding() = JavaFxObserver.toBinding(this.toObservable())
+fun <T> Maybe<T>.toLazyBinding() = JavaFxObserver.toLazyBinding(this.toObservable())
 
 
 /**
@@ -122,7 +122,7 @@ fun <T> ObservableValue<T>.toObservable() = JavaFxObservable.valuesOf(this)
 fun <T> ObservableValue<T>.toNullableObservable() = JavaFxObservable.nullableValuesOf(this)
 
 /**
- * Create an rx Observable from a javafx Observable, emitting it when an invalidation occurs
+ * Create an rx Observable from a javafx Observable, emitting it when an invalidation occursk
  * @return an rx Observable emitting the JavaFX Observable every time it is invalidated
  */
 fun javafx.beans.Observable.invalidations() = JavaFxObservable.invalidationsOf(this)

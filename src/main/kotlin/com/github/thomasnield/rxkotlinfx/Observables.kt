@@ -113,6 +113,14 @@ fun <T> Flowable<T>.toLazyBinding(errorHandler: (Throwable) -> Unit) = JavaFxSub
  */
 fun <T> ObservableValue<T>.toObservable() = JavaFxObservable.valuesOf(this)
 
+/**
+ * Create an rx Observable from a javafx ObservableValue
+ * @param <T>          the type of the observed value
+ * @param nullSentinel the default sentinel value emitted when the observable is null
+ * @return an Observable emitting values as the wrapped ObservableValue changes
+ */
+fun <T> ObservableValue<T>.toObservable(nullSentinel: T) = JavaFxObservable.valuesOf(this, nullSentinel)
+
 
 /**
  * Create an rx Observable from a javafx ObservableValue, emitting nullable values as Java 8 `Optional` types

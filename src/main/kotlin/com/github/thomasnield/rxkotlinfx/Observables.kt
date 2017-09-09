@@ -289,7 +289,13 @@ fun <T> ObservableSet<SetChange<T>>.changes() = JavaFxObservable.changesOf(this)
 /**
  * Emits the response `T` for a given `Dialog<T>`. If no response is provided the Maybe  will be empty.
  */
-fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromDialog(this)!!
+fun <T> Dialog<T>.toMaybe() = JavaFxObservable.fromDialog(this)!!
+
+/**
+ * Emits the response `T` for a given `Dialog<T>`. If no response is provided the Maybe  will be empty.
+ */
+@Deprecated("Use toMaybe() instead")
+fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromDialog(this).toObservable()
 
 @Deprecated("CompositeObservable has been deprecated")
 operator fun <T> CompositeObservable<T>.plusAssign(observable: Observable<T>) {

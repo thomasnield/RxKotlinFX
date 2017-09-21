@@ -6,7 +6,7 @@
 Kotlin extensions to the [RxJavaFX](https://github.com/ReactiveX/RxJavaFX) library. This framework works especially well with [TornadoFX](https://github.com/edvin/tornadofx). See a fully functional demo [here!](https://github.com/thomasnield/rxkotlinfx-tornadofx-demo)
 
 ## Documentation
-[Learning RxJava with JavaFX (EAP)](https://www.gitbook.com/book/thomasnield/rxjavafx-guide/details)
+[Learning RxJava with JavaFX](https://www.gitbook.com/book/thomasnield/rxjavafx-guide/details)
 
 
 ## Binaries

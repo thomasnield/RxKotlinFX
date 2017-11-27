@@ -2,14 +2,11 @@ package com.github.thomasnield.rxkotlinfx
 
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
-import javafx.beans.binding.Binding
-import javafx.beans.property.Property
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxjavafx.sources.CompositeObservable
 import io.reactivex.rxjavafx.subscriptions.CompositeBinding
+import javafx.beans.binding.Binding
+import javafx.beans.property.Property
 
 
 /**
@@ -49,14 +46,6 @@ fun <T> Binding<T>.addTo(compositeBinding: CompositeBinding): Binding<T> {
     compositeBinding.add(this)
     return this
 }
-
-@Deprecated("CompositeObservable has been deprecated")
-fun <T> Observable<T>.addTo(compositeObservable: CompositeObservable<T>, compositeSubscription: CompositeDisposable? = null): Disposable {
-    val subscription = compositeObservable.add(this)
-    compositeSubscription?.apply { this.add(subscription) }
-    return subscription
-}
-
 
 operator fun <T> CompositeBinding.plusAssign(binding: Binding<T>) = add(binding)
 

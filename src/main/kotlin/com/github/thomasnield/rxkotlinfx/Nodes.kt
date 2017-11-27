@@ -1,7 +1,7 @@
 package com.github.thomasnield.rxkotlinfx
 
-import javafx.scene.control.*
 import io.reactivex.Observable
+import javafx.scene.control.*
 
 /**
  * Returns an [Observable] emitting integer values for selected row indexes.

@@ -1,12 +1,10 @@
 package com.github.thomasnield.rxkotlinfx
 
 import io.reactivex.*
-import javafx.application.Platform
-import io.reactivex.flowables.ConnectableFlowable
-import io.reactivex.observables.ConnectableObservable
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler
 import io.reactivex.rxjavafx.transformers.FxFlowableTransformers
 import io.reactivex.rxjavafx.transformers.FxObservableTransformers
+import javafx.application.Platform
 
 /**
  * Observes the emissions on the JavaFX Thread.
@@ -69,13 +67,6 @@ fun <T> Maybe<T>.subscribeOnFx() = subscribeOn(JavaFxScheduler.platform())
  * This is the same as calling Completable#subscribeOnFx(JavaFxScheduler.platform())
  */
 fun Completable.subscribeOnFx() = subscribeOn(JavaFxScheduler.platform())
-
-
-@Deprecated("Deprecated with CompositeObservable", ReplaceWith("autoConnect().apply { subscribe().dispose() }"))
-fun <T> ConnectableObservable<T>.eagerConnect() = autoConnect().apply { subscribe().dispose() }
-
-@Deprecated("Deprecated with CompositeObservable", ReplaceWith("autoConnect().apply { subscribe().dispose() }"))
-fun <T> ConnectableFlowable<T>.eagerConnect() = autoConnect().apply { subscribe().dispose() }
 
 /**
  * Performs the provided onNext action on the FX thread

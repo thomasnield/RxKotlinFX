@@ -1,6 +1,13 @@
 package com.github.thomasnield.rxkotlinfx
 
-import io.reactivex.*
+import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.rxjavafx.observables.JavaFxObservable
+import io.reactivex.rxjavafx.observers.JavaFxObserver
+import io.reactivex.rxjavafx.observers.JavaFxSubscriber
+import io.reactivex.rxjavafx.sources.SetChange
 import javafx.beans.binding.Binding
 import javafx.beans.value.ObservableValue
 import javafx.collections.ObservableList
@@ -15,11 +22,7 @@ import javafx.scene.control.Dialog
 import javafx.scene.control.MenuItem
 import javafx.stage.Window
 import javafx.stage.WindowEvent
-import io.reactivex.rxjavafx.observables.JavaFxObservable
-import io.reactivex.rxjavafx.observers.JavaFxObserver
-import io.reactivex.rxjavafx.observers.JavaFxSubscriber
-import io.reactivex.rxjavafx.sources.CompositeObservable
-import io.reactivex.rxjavafx.sources.SetChange
+import java.util.*
 
 /**
  * Turns an Observable into a JavaFX Binding. Calling the Binding's dispose() method will handle the disposal.
@@ -46,6 +49,57 @@ fun <T> Flowable<T>.toBinding(actionOp: (FlowableBindingSideEffects<T>.() -> Uni
     return JavaFxSubscriber.toBinding((transformer?.let { this.compose(it) }?:this))
 }
 
+/**
+ * Turns an Observable into a JavaFX Binding with a nullSentinel `T` acting as a placeholder for null values. Calling the Binding's dispose() method will handle the disposal.
+ */
+fun <T> Observable<T>.toNullBinding(nullSentinel: T, actionOp: (ObservableBindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
+    val transformer = actionOp?.let {
+        val sideEffects = ObservableBindingSideEffects<T>()
+        it.invoke(sideEffects)
+        sideEffects.transformer
+    }
+    return JavaFxObserver.toNullBinding((transformer?.let { this.compose(it) }?:this), nullSentinel)
+}
+
+
+/**
+ * Turns an Flowable into a JavaFX Binding with a nullSentinel `T` acting as a placeholder for null values. Calling the Binding's dispose() method will handle the disposal.
+ */
+fun <T> Flowable<T>.toNullBinding(nullSentinel: T, actionOp: (FlowableBindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
+    val transformer = actionOp?.let {
+        val sideEffects = FlowableBindingSideEffects<T>()
+        it.invoke(sideEffects)
+        sideEffects.transformer
+    }
+    return JavaFxSubscriber.toNullBinding((transformer?.let { this.compose(it) }?:this), nullSentinel)
+}
+
+
+/**
+ * Turns an Observable into a JavaFX Binding that automatically unwraps the Optional to a nullable value. Calling the Binding's dispose() method will handle the disposal.
+ */
+fun <T> Observable<Optional<T>>.toNullableBinding(actionOp: (ObservableBindingSideEffects<Optional<T>>.() -> Unit)? = null): Binding<T> {
+    val transformer = actionOp?.let {
+        val sideEffects = ObservableBindingSideEffects<Optional<T>>()
+        it.invoke(sideEffects)
+        sideEffects.transformer
+    }
+    return JavaFxObserver.toNullableBinding((transformer?.let { this.compose(it) }?:this))
+}
+
+
+/**
+ * Turns an `Flowable<Optional<T>>` into a JavaFX Binding that automatically unwraps the Optional to a nullable value. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Flowable<Optional<T>>.toNullableBinding(actionOp: (FlowableBindingSideEffects<Optional<T>>.() -> Unit)? = null): Binding<T> {
+    val transformer = actionOp?.let {
+        val sideEffects = FlowableBindingSideEffects<Optional<T>>()
+        it.invoke(sideEffects)
+        sideEffects.transformer
+    }
+    return JavaFxSubscriber.toNullableBinding((transformer?.let { this.compose(it) }?:this))
+}
+
 
 /**
  * Turns an Observable into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
@@ -58,6 +112,18 @@ fun <T> Observable<T>.toLazyBinding() = JavaFxObserver.toLazyBinding(this)
  */
 fun <T> Flowable<T>.toLazyBinding() = JavaFxSubscriber.toLazyBinding(this)
 
+
+
+/**
+ * Turns an `Observable<Optional<T>>` into a lazy JavaFX Binding that automatically unwraps the Optional to a nullable value, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Observable<Optional<T>>.toLazyNullableBinding() = JavaFxObserver.toLazyNullableBinding(this)
+
+
+/**
+ * Turns a `Flowable<Optional<T>>` into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Flowable<Optional<T>>.toLazyNullableBinding() = JavaFxSubscriber.toLazyNullableBinding(this)
 
 /**
  * Turns a Single into a JavaFX Binding. Calling the Binding's dispose() method will handle the disposal.
@@ -78,6 +144,12 @@ fun <T> Single<T>.toLazyBinding() = JavaFxObserver.toLazyBinding(this.toObservab
 
 
 /**
+ * Turns a `Single<Optional<T>>` into a lazy JavaFX Binding that automatically unwraps the Optional to a nullable value, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Single<Optional<T>>.toLazyNullableBinding() = JavaFxObserver.toLazyNullableBinding(this.toObservable())
+
+
+/**
  * Turns a Maybe into a JavaFX Binding. Calling the Binding's dispose() method will handle the disposal.
  */
 fun <T> Maybe<T>.toBinding(actionOp: (ObservableBindingSideEffects<T>.() -> Unit)? = null): Binding<T> {
@@ -93,6 +165,12 @@ fun <T> Maybe<T>.toBinding(actionOp: (ObservableBindingSideEffects<T>.() -> Unit
  * Turns a Maybe into a lazy JavaFX Binding, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
  */
 fun <T> Maybe<T>.toLazyBinding() = JavaFxObserver.toLazyBinding(this.toObservable())
+
+/**
+ * Turns a `Maybe<Optional<T>>` into a lazy JavaFX Binding that automatically unwraps the Optional to a nullable value, by lazy meaning it will delay subscription until `getValue()` is requested. Calling the Binding's dispose() method will handle the unsubscription.
+ */
+fun <T> Maybe<Optional<T>>.toLazyNullableBinding() = JavaFxObserver.toLazyNullableBinding(this.toObservable())
+
 
 
 /**
@@ -290,15 +368,3 @@ fun <T> ObservableSet<SetChange<T>>.changes() = JavaFxObservable.changesOf(this)
  * Emits the response `T` for a given `Dialog<T>`. If no response is provided the Maybe  will be empty.
  */
 fun <T> Dialog<T>.toMaybe() = JavaFxObservable.fromDialog(this)!!
-
-/**
- * Emits the response `T` for a given `Dialog<T>`. If no response is provided the Maybe  will be empty.
- */
-@Deprecated("Use toMaybe() instead")
-fun <T> Dialog<T>.toObservable() = JavaFxObservable.fromDialog(this).toObservable()
-
-@Deprecated("CompositeObservable has been deprecated")
-operator fun <T> CompositeObservable<T>.plusAssign(observable: Observable<T>) {
-    add(observable)
-}
-

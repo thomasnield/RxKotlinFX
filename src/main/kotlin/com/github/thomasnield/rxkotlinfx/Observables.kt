@@ -1,9 +1,9 @@
 package com.github.thomasnield.rxkotlinfx
 
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjavafx.observables.JavaFxObservable
 import io.reactivex.rxjavafx.observers.JavaFxObserver
 import io.reactivex.rxjavafx.observers.JavaFxSubscriber

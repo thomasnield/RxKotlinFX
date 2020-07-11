@@ -1,6 +1,6 @@
 package com.github.thomasnield.rxkotlinfx
 
-import io.reactivex.*
+import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler
 import io.reactivex.rxjavafx.transformers.FxFlowableTransformers
 import io.reactivex.rxjavafx.transformers.FxObservableTransformers

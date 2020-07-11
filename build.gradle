@@ -1,29 +1,54 @@
 buildscript {
-    ext.kotlin_version = '1.1.60'
-
     repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-  }
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.5.2"
+        classpath "org.javamodularity:moduleplugin:1.5.0"
+    }
 }
 
+apply plugin: "java"
 apply plugin: "kotlin"
-apply plugin: 'maven'
-apply plugin: 'signing'
+apply plugin: "org.javamodularity.moduleplugin"
+apply plugin: "maven"
+apply plugin: "maven-publish"
+apply plugin: "com.jfrog.bintray"
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+def currentOS = org.gradle.internal.os.OperatingSystem.current()
+def platform
+if (currentOS.isWindows()) {
+    platform = 'win'
+} else if (currentOS.isLinux()) {
+    platform = 'linux'
+} else if (currentOS.isMacOsX()) {
+    platform = 'mac'
+}
 
 repositories {
-  mavenCentral()
+    mavenCentral()
+    maven {
+        url "https://dl.bintray.com/speljohan/rxjavafx-mirror"
+    }
 }
 
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'io.reactivex.rxjava2:rxjavafx:2.2.2'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.3.72"
+    compile "org.openjfx:javafx-base:11:${platform}"
+    compile "org.openjfx:javafx-graphics:11:${platform}"
+    compile "org.openjfx:javafx-swing:11:${platform}"
+    compile "org.openjfx:javafx-controls:11:${platform}"
+    compile 'io.reactivex.rxjava3:rxjavafx:3.0.1'
     testCompile 'junit:junit:4.12'
 }
 
@@ -42,15 +67,15 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-signing {
-    sign configurations.archives
-}
+//signing {
+    //sign configurations.archives
+//}
 
 group = "com.github.thomasnield"
 archivesBaseName = "rxkotlinfx"
-version = "2.2.2"
+version = "3.0.1"
 
-uploadArchives {
+/*uploadArchives {
     repositories {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
@@ -91,5 +116,103 @@ uploadArchives {
                 }
             }
         }
+    }
+}*/
+
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compileClasspath
+
+    options {
+        setMemberLevel JavadocMemberLevel.PUBLIC
+        setAuthor true
+//        links "https://docs.oracle.com/javase/8/docs/api/" // causes build to fail on openjdk-11.0.2+9
+    }
+}
+
+task packageJavadoc(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact packageJavadoc
+
+            groupId GROUP
+            version VERSION_NAME
+            artifactId ARTIFACT_ID
+
+            pom {
+                name = POM_NAME
+                description = POM_DESCRIPTION
+                url = POM_URL
+
+                licenses {
+                    license {
+                        name = POM_LICENCE_NAME
+                        url = POM_SCM_URL
+                        distribution = POM_LICENCE_DIST
+                    }
+                }
+                developers {
+                    developer {
+                        id = "thomasnield"
+                        name = "Thomas Nield"
+                        email = "thomasnield@live.com"
+                        organization = "ReactiveX"
+                        organizationUrl = "http://reactivex.io/"
+                    }
+                }
+                scm {
+                    connection = POM_SCM_CONNECTION
+                    developerConnection = POM_SCM_DEV_CONNECTION
+                    url = "scm:git:git@github.com:thomasnield/RxKotlinFX.git"
+                }
+                issueManagement {
+                    system = "github"
+                    url = "https://github.com/thomasnield/RxKotlinFX/issues"
+                }
+            }
+        }
+    }
+}
+bintray {
+    user = BINTRAY_USERNAME
+    key = BINTRAY_KEY
+    publications = ['mavenJava']
+
+    publish = true
+    pkg {
+        repo = 'rxkotlinfx-mirror'
+        name = 'RxKotlinFX'
+        //userOrg = 'reactivex'
+        licenses = ['Apache-2.0']
+        labels = ['rxjava', 'reactivex']
+        websiteUrl = 'https://github.com/thomasnield/RxKotlinFX/'
+        issueTrackerUrl = 'https://github.com/thomasnield/RxKotlinFX/issues'
+        vcsUrl = "https://github.com/thomasnield/RxKotlinFX.git"
+
+        version {
+            name = VERSION_NAME
+            vcsTag = VERSION_NAME
+            /*gpg {
+                sign = true
+            }
+            mavenCentralSync {
+                sync = true
+                user = rootProject.sonatypeUsername
+                password = rootProject.sonatypePassword
+
+                name = POM_NAME
+                description = POM_DESCRIPTION
+
+                close = "1"
+            }*/
+        }
+
     }
 }

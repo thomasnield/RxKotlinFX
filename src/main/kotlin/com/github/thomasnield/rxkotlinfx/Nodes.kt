@@ -1,6 +1,6 @@
 package com.github.thomasnield.rxkotlinfx
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javafx.scene.control.*
 
 /**

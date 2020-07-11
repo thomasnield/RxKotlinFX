@@ -118,6 +118,68 @@ version = "3.0.1"
         }
     }
 }*/
+
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compileClasspath
+
+    options {
+        setMemberLevel JavadocMemberLevel.PUBLIC
+        setAuthor true
+//        links "https://docs.oracle.com/javase/8/docs/api/" // causes build to fail on openjdk-11.0.2+9
+    }
+}
+
+task packageJavadoc(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact packageJavadoc
+
+            groupId GROUP
+            version VERSION_NAME
+            artifactId ARTIFACT_ID
+
+            pom {
+                name = POM_NAME
+                description = POM_DESCRIPTION
+                url = POM_URL
+
+                licenses {
+                    license {
+                        name = POM_LICENCE_NAME
+                        url = POM_SCM_URL
+                        distribution = POM_LICENCE_DIST
+                    }
+                }
+                developers {
+                    developer {
+                        id = "thomasnield"
+                        name = "Thomas Nield"
+                        email = "thomasnield@live.com"
+                        organization = "ReactiveX"
+                        organizationUrl = "http://reactivex.io/"
+                    }
+                }
+                scm {
+                    connection = POM_SCM_CONNECTION
+                    developerConnection = POM_SCM_DEV_CONNECTION
+                    url = "scm:git:git@github.com:thomasnield/RxKotlinFX.git"
+                }
+                issueManagement {
+                    system = "github"
+                    url = "https://github.com/thomasnield/RxKotlinFX/issues"
+                }
+            }
+        }
+    }
+}
 bintray {
     user = BINTRAY_USERNAME
     key = BINTRAY_KEY

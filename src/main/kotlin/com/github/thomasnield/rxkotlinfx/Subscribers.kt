@@ -1,9 +1,9 @@
 package com.github.thomasnield.rxkotlinfx
 
-import io.reactivex.Flowable
-import io.reactivex.FlowableTransformer
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.FlowableTransformer
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
 import io.reactivex.rxjavafx.subscriptions.CompositeBinding
 import javafx.beans.binding.Binding
 import javafx.beans.property.Property

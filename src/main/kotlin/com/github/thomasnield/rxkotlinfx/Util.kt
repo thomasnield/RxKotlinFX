@@ -1,6 +1,6 @@
 package com.github.thomasnield.rxkotlinfx
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import java.util.*
 
 @Deprecated("Don't use this anymore. Implement yourself.", ReplaceWith("Single.just(this).filter { it.isPresent }.map { it.get() }", "io.reactivex.Observable"))
